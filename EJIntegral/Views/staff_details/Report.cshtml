@@ -1,0 +1,80 @@
+﻿@model EJIntegral.Models.ReportParamer
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-3 col-lg-4">
+
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="row" style="margin-top:10px">
+            <div class="card">
+                <div class="card-header" style="background-color:#1ac6ff;color: #fff;margin-bottom:5px;">
+                    <h2 class="card-title text-center">Employee List Report</h2>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.ReportType, "Report Type", htmlAttributes: new { @class = "control-label" })
+
+                                    @Html.DropDownListFor(model => model.ReportType, new SelectList(ViewBag.ReportType, "Value", "Text"), null, htmlAttributes: new { @class = "form-control", id = "report_type", onchange = "reload_controls()" })
+                                    @Html.ValidationMessageFor(model => model.ReportType, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-info">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <h3></h3>
+
+    </div>
+    <div class="col-lg-3">
+
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+
+
+        function reload_controls() {
+            var report_type = $('#report_type').val();
+
+            if (report_type == "2") {
+                $('#div_town').show();
+                $('#div_number').hide();
+            }
+            else if (report_type == "3") {
+                $('#div_town').hide();
+                $('#div_number').show();
+            }
+            else {
+                $('#div_town').hide();
+                $('#div_number').hide();
+            }
+        }
+
+    </script>
+
+}
+

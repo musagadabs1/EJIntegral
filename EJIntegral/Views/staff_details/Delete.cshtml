@@ -1,0 +1,161 @@
+﻿@model EJIntegral.Models.Staff_Details
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Staff_Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResidenceAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResidenceAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaritalStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaritalStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StateOfOrigin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StateOfOrigin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LGA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LGA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NRelationship)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NRelationship)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DevArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DevArea)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

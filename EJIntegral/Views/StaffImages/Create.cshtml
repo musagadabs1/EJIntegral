@@ -1,0 +1,89 @@
+﻿@model EJIntegral.Models.StaffImage
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Capture Staff Photo</h2>
+
+@using (Html.BeginForm())
+ {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+
+                    <div class="row">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="left"><u>Live Camera</u></td>
+                                <td></td>
+                                <td align="left"><u>Captured Picture</u></td>
+                            </tr>
+                            <tr>
+                                <td><div id="webcam"></div></td>
+                                <td>&nbsp;</td>
+                                @*style="visibility: hidden; width: "320px;height: 240px"*@
+                                <td><img id="imgCapture" src="~/Content/images/person.jpg" width="120" height="80" /></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <input type="button" value="Capture" onclick="Capture();" class="btn btn-primary" />
+                        <br />
+                        @*<span id="camStatus"></span>*@
+                        @*<img src="~/images/@item.imageUrl" width="100" height="100" />*@
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save staff Photo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    
+}
+
+<script src="~/Scripts/jQuery-webcam-master/jquery.webcam.js"></script>
+@section Scripts {
+    <script>
+
+        $(function () {
+            jQuery("#webcam").webcam({
+                width: 320,
+                height: 240,
+                mode: "save",
+                swffile: '/Content/jQuery-webcam-master/jscam.swf',
+                debug: function (type, status) {
+                    $('#camStatus').append(type + ": " + status + '<br /><br />');
+                },
+                onSave: function (data, ab) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetCapture", "StaffImages")',
+                        data: '',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "text",
+                        success: function (r) {
+                            $("#imgCapture").css("visibility", "visible");
+                            $("#imgCapture").attr("src", r.d);
+                        },
+                        failure: function (response) {
+                            alert(response.d);
+                        }
+                    });
+                },
+                onCapture: function () {
+                    webcam.save('/StaffImages/Capture');
+                }
+            });
+        });
+        function Capture() {
+            webcam.capture();
+        }
+
+    </script>
+}

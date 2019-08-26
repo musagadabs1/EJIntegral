@@ -1,0 +1,314 @@
+﻿@model EJIntegral.Models.Service_Details
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Enter Service Details</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Entry Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FileNo, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.FileNo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FileNo, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateOfFirstAppt, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DateOfFirstAppt, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DateOfFirstAppt, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SignatoryToApptLetter, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.SignatoryToApptLetter, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SignatoryToApptLetter, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmationDate, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.ConfirmationDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ConfirmationDate, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Entry_Rank, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Entry_Rank, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Entry_Rank, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Deparment, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Deparment, new SelectList(ViewBag.Departments, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "dept", onchange = "getDesignations()" })
+                            @Html.ValidationMessageFor(model => model.Deparment, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label" })
+                            <select id="designation" class="form-control designationClass"></select>
+                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Entry_GradeLevel, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Entry_GradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "entryGradeLevel", onchange = "getSalary()" })
+                            @Html.ValidationMessageFor(model => model.Entry_GradeLevel, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Step, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Step, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "step", onchange = "getSalary()" })
+                            @Html.ValidationMessageFor(model => model.Step, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConsolidatedSalary, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.ConsolidatedSalary, new { htmlAttributes = new { @class = "form-control", @id = "conSalary" } })
+                            @Html.ValidationMessageFor(model => model.ConsolidatedSalary, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PlaceOfPosting, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.PlaceOfPosting, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PlaceOfPosting, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Qualification, new SelectList(ViewBag.Qualification, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "qualification" })
+                            @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Current Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.YearOfLastPromotion, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.YearOfLastPromotion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.YearOfLastPromotion, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentRank, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.CurrentRank, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CurrentRank, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentQualification, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.CurrentQualification, new SelectList(ViewBag.Qualification, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentQualification" })
+                            @Html.ValidationMessageFor(model => model.CurrentQualification, "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.Deparment, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Deparment, new SelectList(ViewBag.Departments, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentDept", onchange = "currentgetDesignations()" })
+                            @Html.ValidationMessageFor(model => model.Deparment, "", new { @class = "text-danger" })
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentDesignation, htmlAttributes: new { @class = "control-label" })
+                            <select id="currentDesignation" class="form-control designationClass"></select>
+                            @Html.ValidationMessageFor(model => model.CurrentDesignation, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentGradeLevel, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.CurrentGradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentGradeLevel", onchange = "getCurrentSalary()" })
+                            @Html.ValidationMessageFor(model => model.CurrentGradeLevel, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentStep, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.CurrentStep, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentStep", onchange = "getCurrentSalary()" })
+                            @Html.ValidationMessageFor(model => model.CurrentStep, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentConsolidatedSalary, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.CurrentConsolidatedSalary, new { htmlAttributes = new { @class = "form-control", @id = "currentConSalary" } })
+                            @Html.ValidationMessageFor(model => model.CurrentConsolidatedSalary, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BankName, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AccountNumber, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BVN, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.BVN, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BVN, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Allowances, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Allowances, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Allowances, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script>
+
+        function getSalary() {
+
+            var grade = $("#entryGradeLevel").val();
+            var step = $("#step").val();
+            $.ajax({
+                url: '@Url.Action("GetSalary", "Service_Details")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    gradeId: grade,
+                    stepId: step
+                }),
+                success: function(result)
+                {
+                    $("#conSalary").html("");
+                  
+                    $("#conSalary").val(result);
+                  
+
+                },
+                error: function()
+                {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+        //currentDesignation
+        function currentgetDesignations() {
+            //debugger;
+            var depId = $("#dept").val();
+            $.ajax({
+                url: '@Url.Action("GetDesignationList", "Service_Details")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deptId: depId
+                }),
+                success: function(result)
+                {
+                    $(".designationClass").html("");
+                   $.each($.parseJSON(result), function(i, da)
+                   {
+                       $(".designationClass").append($('<option></option>').val(da.Id).html(da.DesignationName))
+                   })
+
+                },
+                error: function()
+                {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+
+        function getDesignations() {
+            //debugger;
+            var lgaId = $("#dept").val();
+            $.ajax({
+                url: '@Url.Action("GetDesignationList", "Service_Details")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    deptId: lgaId
+                }),
+                success: function(result)
+                {
+                    $(".designationClass").html("");
+                   $.each($.parseJSON(result), function(i, da)
+                   {
+                       $(".designationClass").append($('<option></option>').val(da.Id).html(da.DesignationName))
+                   })
+
+                },
+                error: function()
+                {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+
+        function getCurrentDesignations() {
+            //debugger;
+            var lgaId = $("#dept").val();
+            $.ajax({
+                url: '@Url.Action("GetDesignationList", "Service_Details")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    lgId: lgaId
+                }),
+                success: function(result)
+                {
+                    $("#designation").html("");
+                   $.each($.parseJSON(result), function(i, da)
+                   {
+                       $("#designation").append($('<option></option>').val(da.development_area_name).html(da.development_area_name))
+                   })
+
+                },
+                error: function()
+                {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+
+        function getCurrentSalary() {
+
+            var grade = $("#currentGradeLevel").val();
+            var step = $("#currentStep").val();
+            $.ajax({
+                url: '@Url.Action("GetSalary", "Service_Details")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    gradeId: grade,
+                    stepId: step
+                }),
+                success: function(result)
+                {
+                    $("#currentConSalary").html("");
+                  
+                    $("#currentConSalary").val(result);
+                  
+
+                },
+                error: function()
+                {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+    </script>
+
+}

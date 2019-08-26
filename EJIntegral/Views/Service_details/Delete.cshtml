@@ -1,0 +1,215 @@
+﻿@model EJIntegral.Models.Service_Details
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Service Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StaffId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StaffId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Entry_Rank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Entry_Rank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfFirstAppt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfFirstAppt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Entry_GradeLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Entry_GradeLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deparment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deparment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BVN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BVN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsolidatedSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConsolidatedSalary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceOfPosting)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceOfPosting)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfirmationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConfirmationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearOfLastPromotion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearOfLastPromotion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Qualification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qualification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Step)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Step)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Allowances)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Allowances)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentRank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentRank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentQualification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentQualification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentGradeLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentGradeLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentStep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentStep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SignatoryToApptLetter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SignatoryToApptLetter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentConsolidatedSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentConsolidatedSalary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentDesignation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentDesignation)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

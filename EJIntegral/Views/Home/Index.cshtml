@@ -1,0 +1,89 @@
+﻿@model IEnumerable<EJIntegral.Models.GetEmployeeInfoWithPhoto_Result>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" style="margin-top:5%;">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>Employees</h2>
+                <a href="@Url.Action("create","Staff_Details")" class="btn btn-primary" style="float:right;">New Profile</a>
+                <br />
+                      <div class="float-md-left">
+                          @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                          {
+
+                              <div>
+                                  Staff ID:<br/>
+                                  <input type="text" id="staffId" class="form-control" name="staffId" placeholder="Search by Staff Number">
+
+                                  <input type="submit" id="submitId" value="Search" class="btn btn-primary" style="margin-top:10px" />
+
+                              </div>
+
+                          }
+                      </div>
+                <br />
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped m-b-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th></th>
+                                <th>STAFF ID</th>
+                                <th>FULL NAME</th>
+                                @*<th>PHONE</th>*@
+                                <th>DEPARTMENT</th>
+                                <th>CURRENT GRADE LEVEL</th>
+                                <th>CURRENT STEP</th>
+                                <th>FIRST APPOINTMENT DATE</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="~/Captures/@item.ImagePath" class="rounded-circle width35" width="50" height="30" alt="" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StaffId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fullname)
+                                    </td>
+                                    @*<td>
+                                        <span class="badge badge-success">@Html.DisplayFor(modelItem => item.ContactNumber)</span>
+                                    </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrentGradeLevel)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrentStep)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateOfFirstAppt)
+                                    </td>
+                                    <td>
+                                        <a href="/Biometric/index?staffid=@item.StaffId" class="btn btn-sm btn-info"> Biometrics</a>
+                                        <a href="@Url.Action("Print","Staff_Details",new { id=item.StaffId})" class="btn btn-sm btn-warning">
+                                            Preview
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EJIntegral", "EJIntegral\EJIntegral.csproj", "{BC34AADB-81CD-4436-9208-B56729533010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerPrintModule", "FingerPrintModule\FingerPrintModule.csproj", "{403ED447-78F9-461A-BFA9-93FD8F8E21FE}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Biometric.Installer", "Biometric.Installer\Biometric.Installer.wixproj", "{CD661B08-ECA6-494B-B435-0421968C2387}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installation.Bundler", "Installation.Bundler\Installation.Bundler.wixproj", "{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC34AADB-81CD-4436-9208-B56729533010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC34AADB-81CD-4436-9208-B56729533010}.Release|x86.Build.0 = Release|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{403ED447-78F9-461A-BFA9-93FD8F8E21FE}.Release|x86.Build.0 = Release|Any CPU
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Debug|x86.ActiveCfg = Debug|x86
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Debug|x86.Build.0 = Debug|x86
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Release|Any CPU.ActiveCfg = Release|x86
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Release|x86.ActiveCfg = Release|x86
+		{CD661B08-ECA6-494B-B435-0421968C2387}.Release|x86.Build.0 = Release|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Debug|x86.ActiveCfg = Debug|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Debug|x86.Build.0 = Debug|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Release|Any CPU.ActiveCfg = Release|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Release|x86.ActiveCfg = Release|x86
+		{BE936369-AAB1-46ED-89E9-E65A01EBA6EC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A866808-D8E7-47DA-9B76-554EB900753E}
+	EndGlobalSection
+EndGlobal

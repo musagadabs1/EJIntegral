@@ -1,0 +1,196 @@
+﻿@model IEnumerable<EJIntegral.Models.Service_Details>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Entry_Rank)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfFirstAppt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Entry_GradeLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deparment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Designation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BankName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BVN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsolidatedSalary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlaceOfPosting)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfirmationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YearOfLastPromotion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qualification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Step)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Allowances)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentRank)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentQualification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentGradeLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentStep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignatoryToApptLetter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentConsolidatedSalary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentDesignation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StaffId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Entry_Rank)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfFirstAppt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Entry_GradeLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deparment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Designation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BVN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConsolidatedSalary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaceOfPosting)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearOfLastPromotion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qualification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Step)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Allowances)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentRank)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentQualification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentGradeLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentStep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SignatoryToApptLetter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentConsolidatedSalary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentDesignation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

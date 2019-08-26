@@ -1,0 +1,221 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .fgimage {
+        width: 80%;
+    }
+    input[type=button] {
+        margin: 2rem 5rem .5rem;
+    }
+</style>
+
+<div class="row" style="margin-top:5%;">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-hover m-b-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>THUMB FINGER</th>
+                                <th>INDEX FINGER</th>
+                                <th>MIIDDLE FINGER</th>
+                                <th>RING FINGER</th>
+                                <th>LITTLE FINGER</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="~/Content/fgimages/LEFT_THUMB.png" class="fgimage" id="LEFT_THUMB">
+                                    <br />
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_LEFT_THUMB" onclick="captureFP(1)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/LEFT_INDEX.png" class="fgimage" id="LEFT_INDEX">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_LEFT_INDEX" onclick="captureFP(2)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/LEFT_MIDDLE.png" class="fgimage" id="LEFT_MIDDLE">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_LEFT_MIDDLE" onclick="captureFP(3)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/LEFT_RING.png" class="fgimage" id="LEFT_RING">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_LEFT_RING" onclick="captureFP(4)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/LEFT_LITTLE.png" class="fgimage" id="LEFT_LITTLE">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_LEFT_LITTLE" onclick="captureFP(5)">
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="~/Content/fgimages/RIGHT_THUMB.png" class="fgimage" id="RIGHT_THUMB">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_RIGHT_THUMB" onclick="captureFP(6)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/RIGHT_INDEX.png" class="fgimage" id="RIGHT_INDEX">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_RIGHT_INDEX" onclick="captureFP(7)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/RIGHT_MIDDLE.png" class="fgimage" id="RIGHT_MIDDLE">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_RIGHT_MIDDLE" onclick="captureFP(8)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/RIGHT_RING.png" class="fgimage" id="RIGHT_RING">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_RIGHT_RING" onclick="captureFP(9)">
+                                </td>
+                                <td>
+                                    <img src="~/Content/fgimages/RIGHT_RING.png" class="fgimage" id="RIGHT_RING">
+                                    <input type="button" class="btn btn-primary" value="Scan" id="BTN_RIGHT_LITTLE" onclick="captureFP(10)">
+                                </td>
+                                <td></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="offset-8 col-4">
+        <a class="btn btn-warning reset">Reset</a>
+        <a class="btn btn-success confirm" id="Save" disabled>Save</a>
+    </div>
+</div>
+
+@section Scripts{
+    
+
+    <script>
+
+        let staffId;
+        staffId = getUrlVars()["staffid"];
+        console.log(staffId);
+        let newPrint;
+        let capturedPrint = [];
+        let fingerPosition = ["", "LEFT_THUMB", "LEFT_INDEX", "LEFT_MIDDLE", "LEFT_RING", "LEFT_LITTLE",
+            "RIGHT_THUMB", "RIGHT_INDEX", "RIGHT_MIDDLE", "RIGHT_RING", "RIGHT_LITTLE"];
+        let url = 'http://localhost:50000/api/FingerPrint';
+
+        let PreviousCaptureURL = url + '/CheckForPreviousCapture?staffId=' + staffId;
+
+        ////check if there is a previod record
+        $.ajax({
+            type: "GET",
+            url: PreviousCaptureURL,
+            //contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (data) {
+                if (data !== undefined && data !== null && data.length > 0) {
+                    alert('Finger Print already captured for this staff');
+                    $('input').attr('disabled', 'disabled');
+                }
+            },
+            error: function (xhr, status, err) {
+                alert('System error. Please check that the Biometric service is running');
+                console.log(err);
+            }
+        });
+     
+        function captureFP(position) {
+
+             if(staffId === undefined){
+                 alert('employee not registered');
+                 return;
+             }
+
+            let captureURL = url + '/CapturePrint?fingerPosition=' + position;
+
+            $.ajax({
+                type: "GET",
+                url: captureURL,
+                //contentType: "application/json; charset=utf-8",
+                cache: false,
+                success: function (data) {
+                    if (data.ErrorMessage === '' || data.ErrorMessage === null) {
+                        let imgId = fingerPosition[position];
+                        document.getElementById(imgId).src = "data:image/bmp;base64," + data.Image;
+                        newPrint = data;
+                        //newPrint.PatienId = staffId;
+                        newPrint.Image = '';
+                        capturedPrint.push(newPrint);
+                        if (capturedPrint.length > 1) {
+                            $('#Save').removeAttr('disabled');
+                        }
+                    }
+                    else {
+                        alert(data.ErrorMessage);
+                    }
+                },
+                error: function (xhr, status, err) {
+                    alert(err);
+                    console.log(err);
+                }
+            });           
+        }
+
+        
+        $("#Save").click(function () {
+
+
+            let saveUrl = url + '/SaveToDatabase';
+            let model = {};
+            //Check for non registered employees
+             //if (staffId !== undefined && staffId !== null && staffId.length < 0) {
+             //       alert('Employee not yet captured');
+             //    return;
+             //}
+            
+            model.FingerPrintList = capturedPrint;
+            model.StaffId = staffId;
+
+            $.ajax({
+                type: "Post",
+                url: saveUrl,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(model),
+                cache: false,
+            }).done(function (response) {
+                alert(response.ErrorMessage);
+                var controllerUrl = '@Url.Action("Index", "Home")';
+                staffId = '';
+                window.location.href = controllerUrl;
+                //window.location.reload(true);
+            }).error(function (xhr, status, err) {
+                alert(err);
+                console.log(err);
+            });
+        });
+        
+        $('.reset').click(function () {
+            location.reload(true);
+        });
+
+        $(document).on('click', '.chcktblpt', function (e) {
+            staffId = this.id;
+            newPrint = {};
+            capturedPrint = [];
+        });
+
+        function getUrlVars() {
+            let vars = [], hash;
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (let i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+    </script>
+}
