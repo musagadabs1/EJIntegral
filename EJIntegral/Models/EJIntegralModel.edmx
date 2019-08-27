@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EJIntegralDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EJIntegralDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -366,8 +366,7 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EJIntegralDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -672,25 +671,25 @@
           <FunctionImport Name="CheckBiometricTable" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetAllBanks" ReturnType="Collection(EJIntegralDBModel.GetAllBanks_Result)" />
           <FunctionImport Name="GetAllDAS" ReturnType="Collection(EJIntegralDBModel.GetAllDAS_Result)">
-            <Parameter Name="lgaId" Mode="In" Type="Int32" />
+          <Parameter Name="lgaId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllDepartment" ReturnType="Collection(EJIntegralDBModel.GetAllDepartment_Result)" />
           <FunctionImport Name="GetAllDesignations" ReturnType="Collection(EJIntegralDBModel.GetAllDesignations_Result)">
-            <Parameter Name="deptId" Mode="In" Type="Int32" />
+          <Parameter Name="deptId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllLGAS" ReturnType="Collection(EJIntegralDBModel.GetAllLGAS_Result)" />
           <FunctionImport Name="GetAllowanceByDesignationId" ReturnType="Collection(EJIntegralDBModel.GetAllowanceByDesignationId_Result)">
-            <Parameter Name="designationId" Mode="In" Type="Int32" />
+          <Parameter Name="designationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllPositionsByDeptId">
-            <Parameter Name="deptId" Mode="In" Type="Int32" />
+          <Parameter Name="deptId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetEmployeeInfo" />
           <FunctionImport Name="GetEmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.GetEmployeeInfoForPrint_Result)">
-            <Parameter Name="staffId" Mode="In" Type="String" />
+          <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEmployeeInfoWithPhoto" ReturnType="Collection(EJIntegralDBModel.GetEmployeeInfoWithPhoto_Result)">
-            <Parameter Name="staffId" Mode="In" Type="String" />
+          <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetMaxId" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetSalaryByGradeAndStep" ReturnType="Collection(Double)">
@@ -698,7 +697,7 @@
             <Parameter Name="step" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_EmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.sp_EmployeeInfoForPrint_Result)">
-            <Parameter Name="staffId" Mode="In" Type="String" />
+          <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllBanks_Result">

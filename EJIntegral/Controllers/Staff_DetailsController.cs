@@ -1,15 +1,19 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
-using EJIntegral.Models;
+﻿using EJIntegral.Models;
+using EJIntegral.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace EJIntegral.Controllers
 {
@@ -17,7 +21,6 @@ namespace EJIntegral.Controllers
     public class Staff_DetailsController : Controller
     {
         private EJIntegralDBEntities db = new EJIntegralDBEntities();
-        private readonly ReportDocument reportDocument = new ReportDocument();
         // GET: Staff_Details
         public async Task<ActionResult> Index()
         {
@@ -171,73 +174,67 @@ namespace EJIntegral.Controllers
             return View(staffDetails);
         }
 
-        public ActionResult Report()
+        public List<StaffDetailsViewModel> GetData()
         {
-            ViewBag.ReportType = new List<SelectListItem>
+            var conString = ConfigurationManager.ConnectionStrings["EJIntegralConnection"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                new SelectListItem{Text="Excel",Value="1"},
-                new SelectListItem{Text="Pdf",Value="2"},
-                new SelectListItem{Text="Word",Value="3"}
-            };
-            return View();
+                var dt = new DataTable();
+                var details = new List<StaffDetailsViewModel>();
+
+                var cmd = new SqlCommand("GetEmployeeInfo", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        var obj = new StaffDetailsViewModel();
+
+                        obj.StaffId = dr["StaffId"].ToString();
+                        obj.Fullname = dr["Fullname"].ToString();
+                        obj.DateOfBirth =Convert.ToDateTime( dr["DateOfBirth"].ToString());
+                        obj.ContactNumber = dr["ContactNumber"].ToString();
+                        obj.DepartmentName = dr["DepartmentName"].ToString();
+                        obj.EntryDesignation = dr["EntryDesignation"].ToString();
+                        obj.EntryGradeLevel = dr["EntryGradeLevel"].ToString();
+                        obj.EntryStep =Convert.ToInt32( dr["EntryStep"].ToString());
+                        obj.CurrentGradeLevel = dr["CurrentGradeLevel"].ToString();
+                        obj.CurrentStep =Convert.ToInt32( dr["CurrentStep"].ToString());
+                        obj.EntryQualification = dr["EntryQualification"].ToString();
+                        obj.AdditionalQualification = dr["AdditionalQualification"].ToString();
+                        obj.DateOfFirstAppt =Convert.ToDateTime( dr["DateOfFirstAppt"].ToString());
+
+                        details.Add(obj);
+                    }
+
+
+                   
+                }
+                return details;
+            }
         }
 
-        [HttpPost]
-        public ActionResult Report(FormCollection form)
+        public ActionResult Report()
         {
-            var reportType = int.Parse(Request.Form["ReportType"]);
-            if (reportType == 1)//1 for Excel
-            {
-                using (var stream1 = new MemoryStream())
-                {
-                    var Path = Server.MapPath("~/Reports/EmployeeList.rpt");
-
-
-                    reportDocument.Load(Path);
-                    Stream oStream = null;
-                    byte[] byteArray = null;
-                    oStream = reportDocument.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                    byteArray = new byte[oStream.Length];
-                    oStream.Read(byteArray, 0, Convert.ToInt32(oStream.Length - 1));
-                    oStream.Seek(0, SeekOrigin.Begin);
-                    return File(oStream, "application/excel", string.Format("Staff {0}.xls", DateTime.Now.ToLongTimeString()));
-                }
-            }
-            else if (reportType == 2)//for Pdf
-            {
-                using (var stream1 = new MemoryStream())
-                {
-                    var Path = Server.MapPath("~/Reports/EmployeeList.rpt");
-
-
-                    reportDocument.Load(Path);
-                    Stream oStream = null;
-                    byte[] byteArray = null;
-                    oStream = reportDocument.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                    byteArray = new byte[oStream.Length];
-                    oStream.Read(byteArray, 0, Convert.ToInt32(oStream.Length - 1));
-                    oStream.Seek(0, SeekOrigin.Begin);
-                    return File(oStream, "application/pdf", string.Format("Staff {0}.pdf", DateTime.Now.ToLongTimeString()));
-                }
-            }
-            else if (reportType == 3)//For Word
-            {
-                using (var stream1 = new MemoryStream())
-                {
-                    var Path = Server.MapPath("~/Reports/EmployeeList.rpt");
-
-
-                    reportDocument.Load(Path);
-                    Stream oStream = null;
-                    byte[] byteArray = null;
-                    oStream = reportDocument.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                    byteArray = new byte[oStream.Length];
-                    oStream.Read(byteArray, 0, Convert.ToInt32(oStream.Length - 1));
-                    oStream.Seek(0, SeekOrigin.Begin);
-                    return File(oStream, "application/msword", string.Format("Staff {0}.doc", DateTime.Now.ToLongTimeString()));
-                }
-            }
-
+            var gv = new GridView();
+            gv.DataSource = GetData();
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=" + "StaffDetails_" + DateTime.Today.ToShortTimeString() + ".xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            var objStringWriter = new StringWriter();
+            var objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+            gv.RenderControl(objHtmlTextWriter);
+            Response.Output.Write(objStringWriter.ToString());
+            Response.Flush();
+            Response.End();
             return View();
         }
         // GET: Staff_Details/Delete/5
@@ -273,7 +270,6 @@ namespace EJIntegral.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-            reportDocument.Dispose();
         }
     }
 }

@@ -11,13 +11,11 @@ namespace EJIntegral.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Document
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        [Display(Name ="Document Path")]
         public string DocPath { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }

@@ -8,7 +8,12 @@
         <div class="card">
             <div class="header">
                 <h2>Employees</h2>
-                <a href="@Url.Action("create","Staff_Details")" class="btn btn-primary" style="float:right;">New Profile</a>
+                <div class="">
+                    <a href="@Url.Action("Report","Staff_Details")" class="btn btn-primary" style="float:right;">Export to Excel</a>
+                    
+                    <a href="@Url.Action("create","Staff_Details")" class="btn btn-primary" style="float:right; margin-right:5px;">New Profile</a>
+                </div>
+               
                 <br />
                       <div class="float-md-left">
                           @using (Html.BeginForm("Index", "Home", FormMethod.Post))
