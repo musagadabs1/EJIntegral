@@ -21,7 +21,9 @@ namespace EJIntegral
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/webcam").Include(
+                      "~/Scripts/jQuery-webcam-master/jquery.webcam.js"));
+            //<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css"/>
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

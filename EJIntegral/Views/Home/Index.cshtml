@@ -34,7 +34,6 @@
                                 <th></th>
                                 <th>STAFF ID</th>
                                 <th>FULL NAME</th>
-                                @*<th>PHONE</th>*@
                                 <th>DEPARTMENT</th>
                                 <th>CURRENT GRADE LEVEL</th>
                                 <th>CURRENT STEP</th>
@@ -55,9 +54,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Fullname)
                                     </td>
-                                    @*<td>
-                                        <span class="badge badge-success">@Html.DisplayFor(modelItem => item.ContactNumber)</span>
-                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DepartmentName)
                                     </td>
@@ -68,7 +64,7 @@
                                         @Html.DisplayFor(modelItem => item.CurrentStep)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DateOfFirstAppt)
+                                        @item.DateOfFirstAppt.Value.ToShortDateString()
                                     </td>
                                     <td>
                                         <a href="/Biometric/index?staffid=@item.StaffId" class="btn btn-sm btn-info"> Biometrics</a>

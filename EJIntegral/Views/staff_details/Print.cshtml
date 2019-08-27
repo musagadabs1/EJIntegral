@@ -32,7 +32,6 @@
                     </dt>
                     <dd>
                         @Model.DateOfBirth.Value.ToShortDateString()
-                        @*@Html.DisplayFor(model => model.DateOfBirth)*@
                     </dd>
                     <dt>
                         PHONE NUMBER:
@@ -116,7 +115,6 @@
 
                     <dd>
                         @Model.DateOfFirstAppt.Value.ToShortDateString()
-                        @*@Html.DisplayFor(model => model.DateOfFirstAppt)*@
                     </dd>
                     <dt>
                         ADDITIONAL QUALIFICATION:
@@ -126,8 +124,6 @@
                         @Html.DisplayFor(model => model.AdditionalQualification)
                     </dd>
                 </dl>
-
-                @*<a onclick="window.print();">Print<i class="fas fa-print fa-2x"></i></a>&nbsp;*@
                 <button type="button" onclick="window.print();" class="btn btn-primary" id="printSlip">Print</button>
 
 
