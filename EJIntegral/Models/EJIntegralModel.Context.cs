@@ -151,5 +151,14 @@ namespace EJIntegral.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_EmployeeInfoForPrint_Result>("sp_EmployeeInfoForPrint", staffIdParameter);
         }
+    
+        public virtual ObjectResult<string> GetStaffId(string staffId)
+        {
+            var staffIdParameter = staffId != null ?
+                new ObjectParameter("staffId", staffId) :
+                new ObjectParameter("staffId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetStaffId", staffIdParameter);
+        }
     }
 }

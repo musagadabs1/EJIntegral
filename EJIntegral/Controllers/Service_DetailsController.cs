@@ -199,6 +199,30 @@ namespace EJIntegral.Controllers
             return View(service_Details);
         }
 
+
+        [HttpPost]
+        public ActionResult SaveServiceDetails(Service_Details service_Details)
+        {
+            try
+            {
+                service_Details.CreatedBy = User.Identity.Name;
+                service_Details.StaffId = Utility.StaffId;
+                service_Details.CreatedOn = DateTime.Today;
+                db.Service_Details.Add(service_Details);
+                db.SaveChanges();
+                return Json(service_Details, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Something happened.";
+                throw ex;
+            }
+            
+        }
+
+
+
+
         // GET: Service_Details/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {

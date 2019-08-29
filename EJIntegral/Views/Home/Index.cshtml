@@ -69,10 +69,11 @@
                                         @Html.DisplayFor(modelItem => item.CurrentStep)
                                     </td>
                                     <td>
-                                        @item.DateOfFirstAppt.Value.ToShortDateString()
+                                        @*@item.DateOfFirstAppt.Value.ToShortDateString()*@
+                                        @Html.DisplayFor(modelItem => item.DateOfFirstAppt)
                                     </td>
                                     <td>
-                                        <a href="/Biometric/index?staffid=@item.StaffId" class="btn btn-sm btn-info"> Biometrics</a>
+                                        <a href="~/Biometric/index?staffid=@item.StaffId" class="btn btn-sm btn-info"> Biometrics</a>
                                         <a href="@Url.Action("Print","Staff_Details",new { id=item.StaffId})" class="btn btn-sm btn-warning">
                                             Preview
                                         </a>

@@ -326,6 +326,9 @@
           <Parameter Name="grade" Type="int" Mode="In" />
           <Parameter Name="step" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetStaffId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="staffId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_EmployeeInfoForPrint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="staffId" Type="nvarchar" Mode="In" />
         </Function>
@@ -698,6 +701,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_EmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.sp_EmployeeInfoForPrint_Result)">
           <Parameter Name="staffId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetStaffId" ReturnType="Collection(String)">
+            <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllBanks_Result">
@@ -1135,6 +1141,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStaffId" FunctionName="EJIntegralDBModel.Store.GetStaffId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

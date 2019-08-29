@@ -1454,7 +1454,7 @@ dd {
 @media (min-width: 768px) {
   .dl-horizontal dt {
     float: left;
-    width: 160px;
+    width: 240px;
     overflow: hidden;
     clear: left;
     text-align: right;
@@ -4589,7 +4589,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-    /*background-color: #222;*/
+    /*background-color: #222;  #1ac6ff*/
     background-color: #edf2f2;
     border-color: #080808;
 }

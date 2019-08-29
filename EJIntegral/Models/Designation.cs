@@ -10,8 +10,7 @@
 namespace EJIntegral.Models
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class Designation
     {
         public int Id { get; set; }

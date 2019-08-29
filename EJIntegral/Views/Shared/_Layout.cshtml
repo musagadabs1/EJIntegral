@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - EJIntegral System</title>
-    @Styles.Render("~/Content/css")
-    <link rel="stylesheet" href="~/Content/assets/vendor/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/Content/assets/vendor/chartist/css/chartist.min.css" />
-    <link rel="stylesheet" href="~/Content/assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css" />
-    <link rel="stylesheet" href="~/Content/assets/vendor/toastr/toastr.min.css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/assets/vendor/font-awesome/css/font-awesome.min.css" />
+    <link href="~/Content/assets/vendor/chartist/css/chartist.min.css" />
+    <link href="~/Content/assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css" />
+    <link href="~/Content/assets/vendor/toastr/toastr.min.css" />
     <link href="~/Content/styles.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 
@@ -27,9 +28,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Employees", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("Take Photo", "index", "StaffImages")</li>*@
-                    @*<li>@Html.ActionLink("Employee Details", "Index", "Staff_Details")</li>*@
-                    <li>@Html.ActionLink("Reports", "Report", "Staff_Details")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

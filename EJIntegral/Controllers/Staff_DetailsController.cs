@@ -53,7 +53,9 @@ namespace EJIntegral.Controllers
             ViewBag.MaritalStatus = new List<SelectListItem>{
                 new SelectListItem { Value="Divorce",Text="Divorce"},
                 new SelectListItem { Value="Married",Text="Married"},
-                new SelectListItem { Value="Single",Text="Single"}
+                new SelectListItem { Value="Single",Text="Single"},
+                 new SelectListItem { Value="Widow",Text="Widow"},
+                new SelectListItem { Value="Widower",Text="Widower"}
                 };
             ViewBag.Relationship = new List<SelectListItem>
             {
@@ -91,6 +93,35 @@ namespace EJIntegral.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                if (StaffExist(staff_Details.StaffId.ToUpper()))
+                {
+                    ViewBag.Error = " Staff with this Id already exist. " + staff_Details.StaffId;
+                    ViewBag.LGA = new SelectList(db.GetAllLGAS(), "Id", "LGA");
+                    ViewBag.Gender = new List<SelectListItem>{
+                new SelectListItem { Value="F",Text="Female"},
+                new SelectListItem { Value="M",Text="Male"}
+                };
+                    ViewBag.MaritalStatus = new List<SelectListItem>{
+                new SelectListItem { Value="Divorce",Text="Divorce"},
+                new SelectListItem { Value="Married",Text="Married"},
+                new SelectListItem { Value="Single",Text="Single"},
+                 new SelectListItem { Value="Widow",Text="Widow"},
+                new SelectListItem { Value="Widower",Text="Widower"}
+                };
+                    ViewBag.Relationship = new List<SelectListItem>
+            {
+                new SelectListItem{Value="Brother",Text="Brother"},
+                new SelectListItem{Value="Father",Text="Father"},
+                new SelectListItem{Value="Sister",Text="Sister"},
+                new SelectListItem{Value="Mother",Text="Mother"},
+                new SelectListItem{Value="Uncle",Text="Uncle"},
+                new SelectListItem{Value="Son",Text="Son"},
+                new SelectListItem{Value="Daughter",Text="Daughter"},
+            };
+                    return View(staff_Details);
+                }
+
                 staff_Details.CreatedBy = User.Identity.Name;
                 staff_Details.CreatedOn = DateTime.Now;
                 staff_Details.StateOfOrigin = "Nasawara";
@@ -103,8 +134,40 @@ namespace EJIntegral.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Create","Service_Details");
             }
-
+            ViewBag.LGA = new SelectList(db.GetAllLGAS(), "Id", "LGA");
+            ViewBag.Gender = new List<SelectListItem>{
+                new SelectListItem { Value="F",Text="Female"},
+                new SelectListItem { Value="M",Text="Male"}
+                };
+            ViewBag.MaritalStatus = new List<SelectListItem>{
+                new SelectListItem { Value="Divorce",Text="Divorce"},
+                new SelectListItem { Value="Married",Text="Married"},
+                new SelectListItem { Value="Single",Text="Single"},
+                 new SelectListItem { Value="Widow",Text="Widow"},
+                new SelectListItem { Value="Widower",Text="Widower"}
+                };
+            ViewBag.Relationship = new List<SelectListItem>
+            {
+                new SelectListItem{Value="Brother",Text="Brother"},
+                new SelectListItem{Value="Father",Text="Father"},
+                new SelectListItem{Value="Sister",Text="Sister"},
+                new SelectListItem{Value="Mother",Text="Mother"},
+                new SelectListItem{Value="Uncle",Text="Uncle"},
+                new SelectListItem{Value="Son",Text="Son"},
+                new SelectListItem{Value="Daughter",Text="Daughter"},
+            };
             return View(staff_Details);
+        }
+
+        private bool StaffExist(string staffId)
+        {
+            var exist = false;
+            var stafId = db.Staff_Details.FirstOrDefault(x => x.StaffId.ToUpper().Equals(staffId.ToUpper()));
+            if (stafId != null)
+            {
+                exist = true;
+            }
+            return exist;
         }
 
         // GET: Staff_Details/Edit/5

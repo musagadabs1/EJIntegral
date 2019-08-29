@@ -1,4 +1,5 @@
 ﻿@model EJIntegral.Models.Service_Details
+@using EJIntegral.Helpers
 
 @{
     ViewBag.Title = "Create";
@@ -23,7 +24,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.FileNo, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.FileNo,"File Number", htmlAttributes: new { @class = "control-label" })
 
                             @Html.EditorFor(model => model.FileNo, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.FileNo, "", new { @class = "text-danger" })
@@ -35,7 +36,7 @@
                             @Html.ValidationMessageFor(model => model.DateOfFirstAppt, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.SignatoryToApptLetter, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.SignatoryToApptLetter,"Signatory to Appointment Letter", htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.SignatoryToApptLetter, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.SignatoryToApptLetter, "", new { @class = "text-danger" })
                         </div>
@@ -58,21 +59,21 @@
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label" })
-                            <select id="designation" class="form-control designationClass"></select>
+                            <select id="Designation" class="form-control designationClass"></select>
                             @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Entry_GradeLevel, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Entry_GradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "entryGradeLevel", onchange = "getSalary()" })
+                            @Html.LabelForRequired(model => model.Entry_GradeLevel,"Entry Grade", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Entry_GradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "entryGradeLevel" })
                             @Html.ValidationMessageFor(model => model.Entry_GradeLevel, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Step, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Step, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "step", onchange = "getSalary()" })
+                            @Html.LabelForRequired(model => model.Step,"Entry Step", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Step, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "step" })
                             @Html.ValidationMessageFor(model => model.Step, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ConsolidatedSalary, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.ConsolidatedSalary,"Entry Consolidated Salary", htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.ConsolidatedSalary, new { htmlAttributes = new { @class = "form-control", @id = "conSalary" } })
                             @Html.ValidationMessageFor(model => model.ConsolidatedSalary, "", new { @class = "text-danger" })
                         </div>
@@ -84,7 +85,7 @@
                             @Html.ValidationMessageFor(model => model.PlaceOfPosting, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.Qualification,"Entry Qualification", htmlAttributes: new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.Qualification, new SelectList(ViewBag.Qualification, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "qualification" })
                             @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
                         </div>
@@ -98,7 +99,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.YearOfLastPromotion, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.YearOfLastPromotion,"Year of Last Promotion", htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.YearOfLastPromotion, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.YearOfLastPromotion, "", new { @class = "text-danger" })
                         </div>
@@ -108,32 +109,26 @@
                             @Html.ValidationMessageFor(model => model.CurrentRank, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CurrentQualification, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.CurrentQualification,"Current Qualification", htmlAttributes: new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.CurrentQualification, new SelectList(ViewBag.Qualification, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentQualification" })
                             @Html.ValidationMessageFor(model => model.CurrentQualification, "", new { @class = "text-danger" })
-                        </div>
-                        @*<div class="form-group">
-                            @Html.LabelFor(model => model.Deparment, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Deparment, new SelectList(ViewBag.Departments, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentDept", onchange = "currentgetDesignations()" })
-                            @Html.ValidationMessageFor(model => model.Deparment, "", new { @class = "text-danger" })
-                        </div>*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.CurrentDesignation, htmlAttributes: new { @class = "control-label" })
-                            <select id="currentDesignation" class="form-control designationClass"></select>
+                            <select id="CurrentDesignation" class="form-control designationClass"></select>
                             @Html.ValidationMessageFor(model => model.CurrentDesignation, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CurrentGradeLevel, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.CurrentGradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentGradeLevel", onchange = "getCurrentSalary()" })
+                            @Html.LabelForRequired(model => model.CurrentGradeLevel,"Current Grade", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.CurrentGradeLevel, new SelectList(ViewBag.GradeLevel, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentGradeLevel" })
                             @Html.ValidationMessageFor(model => model.CurrentGradeLevel, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CurrentStep, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.CurrentStep, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentStep", onchange = "getCurrentSalary()" })
+                            @Html.LabelForRequired(model => model.CurrentStep,"Current Step", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.CurrentStep, new SelectList(ViewBag.Step, "Value", "Text"), null, htmlAttributes: new { @class = "custom-select-sm form-control", @id = "currentStep" })
                             @Html.ValidationMessageFor(model => model.CurrentStep, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CurrentConsolidatedSalary, htmlAttributes: new { @class = "control-label" })
+                            @Html.LabelForRequired(model => model.CurrentConsolidatedSalary,"Current Consolidated Salary", htmlAttributes: new { @class = "control-label" })
                             @Html.EditorFor(model => model.CurrentConsolidatedSalary, new { htmlAttributes = new { @class = "form-control", @id = "currentConSalary" } })
                             @Html.ValidationMessageFor(model => model.CurrentConsolidatedSalary, "", new { @class = "text-danger" })
                         </div>
@@ -161,10 +156,10 @@
                 </div>
             </div>
         </div>
-
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" id="saveServiceDetails">Save</button>
             </div>
         </div>
     </div>
@@ -172,7 +167,32 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
+            $('#currentStep').change(function () {
+                getCurrentSalary();
 
+            });
+
+            $('#currentGradeLevel').change(function () {
+                getCurrentSalary();
+
+            });
+
+            //Save Service Details
+            $('#saveServiceDetails').click(function () {
+                saveServiceDetails();
+            });
+
+
+            //
+            $('#step').change(function () {
+                getSalary();
+            })
+
+            $('#entryGradeLevel').change(function () {
+                getSalary();
+            })
+        });
         function getSalary() {
 
             var grade = $("#entryGradeLevel").val();
@@ -189,9 +209,9 @@
                 success: function(result)
                 {
                     $("#conSalary").html("");
-                  
+
                     $("#conSalary").val(result);
-                  
+
 
                 },
                 error: function()
@@ -200,6 +220,7 @@
                 },
             });
         }
+
         //currentDesignation
         function currentgetDesignations() {
             //debugger;
@@ -255,7 +276,7 @@
             });
         }
 
-        function getCurrentDesignations() {
+        @*function getCurrentDesignations() {
             //debugger;
             var lgaId = $("#dept").val();
             $.ajax({
@@ -280,7 +301,66 @@
                     alert("Whooaaa! Something went wrong..")
                 },
             });
+        }*@
+
+        //Saving service_details to database
+        function saveServiceDetails() {
+            var serviceDetail = new Object();
+
+            //Service Details properties
+            serviceDetail.FileNo = $('#FileNo').val();
+            serviceDetail.DateOfFirstAppt = $('#DateOfFirstAppt').val();
+            serviceDetail.SignatoryToApptLetter = $('#SignatoryToApptLetter').val();
+            serviceDetail.ConfirmationDate = $('#ConfirmationDate').val();
+            serviceDetail.Entry_Rank = $('#Entry_Rank').val();
+            serviceDetail.Deparment = $('#dept').val();
+            serviceDetail.Designation = $('#Designation').val();
+            serviceDetail.Entry_GradeLevel = $('#entryGradeLevel').val();
+            serviceDetail.Step = $('#step').val();
+            serviceDetail.ConsolidatedSalary = $('#conSalary').val();
+            serviceDetail.PlaceOfPosting = $('#PlaceOfPosting').val();
+            serviceDetail.Qualification = $('#qualification').val();
+            serviceDetail.YearOfLastPromotion = $('#YearOfLastPromotion').val();
+            serviceDetail.CurrentRank = $('#CurrentRank').val();
+            serviceDetail.CurrentQualification = $('#currentQualification').val();
+            serviceDetail.CurrentDesignation = $('#CurrentDesignation').val();
+            serviceDetail.CurrentGradeLevel = $('#currentGradeLevel').val();
+            serviceDetail.CurrentStep = $('#currentStep').val();
+            serviceDetail.CurrentConsolidatedSalary = $('#currentConSalary').val();
+            serviceDetail.BankName = $('#BankName').val();
+            serviceDetail.AccountNumber = $('#AccountNumber').val();
+            serviceDetail.BVN = $('#BVN').val();
+            serviceDetail.Allowances = $('#Allowances').val();
+
+
+            if (serviceDetail != null) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveServiceDetails", "Service_Details")',
+                    data: JSON.stringify(serviceDetail),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response != null) {
+                            alert("Record Saved.");
+                            var controllerUrl = '@Url.Action("Create", "Documents")';
+                            window.location.href = controllerUrl;
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }  
+
         }
+
+
 
         function getCurrentSalary() {
 
@@ -298,9 +378,9 @@
                 success: function(result)
                 {
                     $("#currentConSalary").html("");
-                  
+
                     $("#currentConSalary").val(result);
-                  
+
 
                 },
                 error: function()
