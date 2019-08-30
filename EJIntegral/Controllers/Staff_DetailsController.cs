@@ -315,6 +315,29 @@ namespace EJIntegral.Controllers
             return View(staff_Details);
         }
 
+        // GET: Backup
+        public ActionResult BackupDatabase()
+        {
+            var dbPath = Server.MapPath("~/App_Data/DBBackup.bak");
+            using (var db = new EJIntegralDBEntities())
+            {
+                var cmd = $"BACKUP DATABASE {"EJIntegralDB"} TO DISK='{dbPath}' WITH FORMAT, MEDIANAME='DbBackups', MEDIADESCRIPTION='Media set for {"EJIntegralDB"} database';";
+                db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, cmd);
+            }
+            return new FilePathResult(dbPath, "application/octet-stream");
+        }
+
+
+        public ActionResult RestoreDatabase()
+        {
+            var dbPath = Server.MapPath("~/App_Data/DBBackup.bak");
+            using (var db = new EJIntegralDBEntities())
+            {
+                var cmd = $"USE master restore WITH REPLACE DATABASE {"EJIntegralDB"} from DISK='{dbPath}';";
+                db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, cmd);
+            }
+            return View();
+        }
         // POST: Staff_Details/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

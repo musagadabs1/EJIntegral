@@ -4097,6 +4097,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Docs\" />
     <Folder Include="Captures\" />
+    <Folder Include="Views\DatabaseOperations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
