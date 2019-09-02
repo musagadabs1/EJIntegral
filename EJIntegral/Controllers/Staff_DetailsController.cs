@@ -333,7 +333,7 @@ namespace EJIntegral.Controllers
             var dbPath = Server.MapPath("~/App_Data/DBBackup.bak");
             using (var db = new EJIntegralDBEntities())
             {
-                var cmd = $"USE master restore WITH REPLACE DATABASE {"EJIntegralDB"} from DISK='{dbPath}';";
+                var cmd = $"USE master restore DATABASE {"EJIntegralDB"} from DISK='{dbPath}' WITH REPLACE;";
                 db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, cmd);
             }
             return View();

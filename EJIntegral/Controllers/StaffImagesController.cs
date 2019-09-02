@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 
@@ -87,13 +88,33 @@ namespace EJIntegral.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ImgPath,StaffId")] StaffImage staffImage)
+        public async Task<ActionResult> Create([Bind(Include = "Id,ImgPath,StaffId")] StaffImage staffImage, HttpPostedFileBase file)
         {
             //if (ModelState.IsValid)
             //{
             //var staffId = "stf001";
+            var fileName = string.Empty;
+            var filePath = string.Empty;
 
-            staffImage.ImgPath = Utility.ImagePath;
+
+            if (file.ContentLength > 0 && file != null)
+            {
+                filePath = file.FileName;
+                fileName = Path.GetFileName(file.FileName);
+            }
+            else
+            {
+                ViewBag.Error = " please select image to continue.";
+                return View(staffImage);
+            }
+            //AppDomain.CurrentDomain.BaseDirectory + "/App_Data/StaffImages";
+            //var folderPath = Server.MapPath("~/Captures");
+            var folderPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/Captures");
+            //var folderPath = AppDomain.CurrentDomain.BaseDirectory + "~/Content/Captures"; //Server.MapPath("~/Captures");
+            var fullFilePath = Path.Combine(folderPath, filePath);
+            file.SaveAs(fullFilePath);
+
+            staffImage.ImgPath = filePath;
             staffImage.StaffId = Utility.StaffId;
             //staffImage.StaffId = staffId;
 

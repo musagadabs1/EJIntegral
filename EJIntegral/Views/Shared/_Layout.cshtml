@@ -28,6 +28,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Employees", "Index", "Home")</li>
+                    <li>
+                        @*<a href="#" class="dropdown"><i class="icon-list"></i><span>Database Operations</span></a>
+                        <ul>
+                            <li><a href="@Url.Action("BackupDatabase", "Staff_Details")">Backup</a></li>
+                            <li><a href="#">Backup</a></li>
+                            <li><a href="@Url.Action("RestoreDatabase","Staff_Details")">Restore</a></li>
+                            <li><a href="#">Restore</a></li>
+                        </ul>*@
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
