@@ -10,7 +10,7 @@ namespace FingerPrintModule.Controllers
         [HttpGet]
         public string Get()
         {
-            string macAddr =
+            var macAddr =
                 (
                 from nic in NetworkInterface.GetAllNetworkInterfaces()
                 where nic.NetworkInterfaceType.ToString() == "Ethernet"

@@ -32,7 +32,7 @@ namespace FingerPrintModule.Facade
             var fp_image = new Byte[m_ImageWidth * m_ImageHeight];
             var m_fingerprinttemplate = new Byte[max_template_size];
 
-            var error = (Int32)SGFPMError.ERROR_NONE;
+            var error = (int)SGFPMError.ERROR_NONE;
             var img_qlty = 0;
 
             if (m_DeviceOpened)
@@ -40,7 +40,7 @@ namespace FingerPrintModule.Facade
                 error = m_FPM.GetImage(fp_image);
             }
 
-            if (error == (Int32)SGFPMError.ERROR_NONE)
+            if (error == (int)SGFPMError.ERROR_NONE)
             {
                 m_FPM.GetImageQuality(m_ImageWidth, m_ImageHeight, fp_image, ref img_qlty);
 
@@ -48,15 +48,15 @@ namespace FingerPrintModule.Facade
                 var finger_info = new SGFPMFingerInfo
                 {
                     FingerNumber = (SGFPMFingerPosition)fingerPosition,
-                    ImageQuality = (Int16)img_qlty,
-                    ImpressionType = (Int16)SGFPMImpressionType.IMPTYPE_LP,
+                    ImageQuality = (short)img_qlty,
+                    ImpressionType = (short)SGFPMImpressionType.IMPTYPE_LP,
                     ViewNumber = 1
                 };
 
                 // CreateTemplate
                 error = m_FPM.CreateTemplate(finger_info, fp_image, m_fingerprinttemplate);
 
-                if (error == (Int32)SGFPMError.ERROR_NONE)
+                if (error == (int)SGFPMError.ERROR_NONE)
                 {
                     return new FingerPrintInfo
                     {
@@ -82,7 +82,7 @@ namespace FingerPrintModule.Facade
         {
             InitializeDevice();
 
-            string matchedRecord = "";
+            var matchedRecord = "";
             var err = 0;
             var fingerprint = Convert.FromBase64String(input.FingerPrintTemplate);
 

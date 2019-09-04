@@ -66,8 +66,14 @@ namespace EJIntegral.Controllers
                 new SelectListItem{Value="Uncle",Text="Uncle"},
                 new SelectListItem{Value="Son",Text="Son"},
                 new SelectListItem{Value="Daughter",Text="Daughter"},
+                new SelectListItem{Value="Husband",Text="Husband"},
+                new SelectListItem{Value="Wife",Text="Wife"}
             };
-
+            ViewBag.Posting = new List<SelectListItem>
+            {
+                new SelectListItem{Value="Development Area",Text="Development Area"},
+                new SelectListItem{Value="Local Government Area",Text= "Local Government Area" }
+            };
             return View();
         }
 
@@ -118,7 +124,10 @@ namespace EJIntegral.Controllers
                 new SelectListItem{Value="Uncle",Text="Uncle"},
                 new SelectListItem{Value="Son",Text="Son"},
                 new SelectListItem{Value="Daughter",Text="Daughter"},
+                new SelectListItem{Value="Husband",Text="Husband"},
+                new SelectListItem{Value="Wife",Text="Wife"}
             };
+
                     return View(staff_Details);
                 }
 
@@ -155,6 +164,8 @@ namespace EJIntegral.Controllers
                 new SelectListItem{Value="Uncle",Text="Uncle"},
                 new SelectListItem{Value="Son",Text="Son"},
                 new SelectListItem{Value="Daughter",Text="Daughter"},
+                new SelectListItem{Value="Husband",Text="Husband"},
+                new SelectListItem{Value="Wife",Text="Wife"}
             };
             return View(staff_Details);
         }
@@ -196,6 +207,8 @@ namespace EJIntegral.Controllers
                 new SelectListItem{Value="Uncle",Text="Uncle"},
                 new SelectListItem{Value="Son",Text="Son"},
                 new SelectListItem{Value="Daughter",Text="Daughter"},
+                new SelectListItem{Value="Husband",Text="Husband"},
+                new SelectListItem{Value="Wife",Text="Wife"}
             };
             var staff_Details = await db.Staff_Details.FindAsync(id);
             if (staff_Details == null)
@@ -225,6 +238,28 @@ namespace EJIntegral.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.Relationship = new List<SelectListItem>
+            {
+                new SelectListItem{Value="Brother",Text="Brother"},
+                new SelectListItem{Value="Father",Text="Father"},
+                new SelectListItem{Value="Sister",Text="Sister"},
+                new SelectListItem{Value="Mother",Text="Mother"},
+                new SelectListItem{Value="Uncle",Text="Uncle"},
+                new SelectListItem{Value="Son",Text="Son"},
+                new SelectListItem{Value="Daughter",Text="Daughter"},
+                new SelectListItem{Value="Husband",Text="Husband"},
+                new SelectListItem{Value="Wife",Text="Wife"}
+            };
+            ViewBag.LGA = new SelectList(db.GetAllLGAS(), "Id", "LGA");
+            ViewBag.Gender = new List<SelectListItem>{
+                new SelectListItem { Value="F",Text="Female"},
+                new SelectListItem { Value="M",Text="Male"}
+                };
+            ViewBag.MaritalStatus = new List<SelectListItem>{
+                new SelectListItem { Value="Divorce",Text="Divorce"},
+                new SelectListItem { Value="Married",Text="Married"},
+                new SelectListItem { Value="Single",Text="Single"}
+                };
             return View(staff_Details);
         }
         public ActionResult Print(string id)

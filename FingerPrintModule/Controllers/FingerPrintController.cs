@@ -13,7 +13,7 @@ namespace FingerPrintModule.Controllers
         [HttpGet]
         public FingerPrintInfo CapturePrint(int fingerPosition)
         {
-            FingerPrintFacade fingerPrintFacade = new FingerPrintFacade();
+            var fingerPrintFacade = new FingerPrintFacade();
             var data = fingerPrintFacade.Capture(fingerPosition, out string err, false);
 
             if (string.IsNullOrEmpty(err))
@@ -29,9 +29,9 @@ namespace FingerPrintModule.Controllers
 
                 if (matchedStaffId != "")
                 {
-                    string info = db.RetrieveStaffIdByID(matchedStaffId);
-                    string name = info.Split('|')[0];
-                    string UniqueId = info.Split('|')[1];
+                    var info = db.RetrieveStaffIdByID(matchedStaffId);
+                    var name = info.Split('|')[0];
+                    var UniqueId = info.Split('|')[1];
                     data.ErrorMessage = string.Format("Finger print record already exist for this staff {0} Name : {1} {2}  Identifier : {3}", Environment.NewLine, name, Environment.NewLine, UniqueId);
                 }
             }
@@ -51,7 +51,7 @@ namespace FingerPrintModule.Controllers
                 var db = new DataAccess();
                 var staffInfo = db.RetrieveStaffIdByID(staffId);
 
-                if (staffInfo != null && Int32.TryParse(staffInfo.Split('|')[1], out int sid))
+                if (staffInfo != null && int.TryParse(staffInfo.Split('|')[1], out int sid))
                 {
                     var previously = db.GetBiometricinfo(sid);
                     return previously;

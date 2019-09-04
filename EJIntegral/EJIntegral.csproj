@@ -4092,7 +4092,7 @@
     <Content Include="Views\staff_details\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Docs\" />
     <Folder Include="Content\Captures\" />
     <Folder Include="Content\Docs\" />
   </ItemGroup>

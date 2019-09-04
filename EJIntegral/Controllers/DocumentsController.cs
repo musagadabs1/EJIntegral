@@ -63,15 +63,8 @@ namespace EJIntegral.Controllers
                         var file = Request.Files[i];
                         if (file !=null && file.ContentLength>0)
                         {
-                            //AppDomain.CurrentDomain.BaseDirectory + "/App_Data/Docs"
                             fileName = Path.GetFileName(file.FileName);
-                            //HttpContext.Current.Server.MapPath("XMLMetadata/Actions.1.xml")
-                            //var folderPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/Docs");
                             var path = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/Docs"), fileName);
-
-                            //var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Docs"), fileName);
-                            
-                            //var path = Path.Combine(Server.MapPath("~/App_Data/Docs"), fileName);
                             file.SaveAs(path);
                             document.CreatedBy = User.Identity.Name;
                             document.CreatedOn = DateTime.Now;
