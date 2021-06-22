@@ -10,73 +10,39 @@
 namespace EJIntegral.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-
+    using System.Collections.Generic;
+    
     public partial class Service_Details
     {
         public int Id { get; set; }
         public string StaffId { get; set; }
-        [Required]
-        [Display(Name = "Staff Identification Number")]
         public string FileNo { get; set; }
-        [Display(Name = "Entry Rank")]
         public string Entry_Rank { get; set; }
-        [DataType(DataType.Date)]
-        [Display(Name = "Date Of First Appointment")]
         public System.DateTime DateOfFirstAppt { get; set; }
-        [Required]
-        [Display(Name = "Entry Grade")]
         public string Entry_GradeLevel { get; set; }
-        [Display(Name = "Department")]
         public int Deparment { get; set; }
         public int Designation { get; set; }
-        [Display(Name = "Bank Name")]
         public string BankName { get; set; }
-        [Display(Name = "Account Number")]
         public string AccountNumber { get; set; }
-        [Display(Name = "Bank Verification Number")]
         public string BVN { get; set; }
-        [Required]
-        [Display(Name = "Entry Consolidated Salary")]
         public Nullable<double> ConsolidatedSalary { get; set; }
-        [Display(Name = "Place Of Posting")]
         public string PlaceOfPosting { get; set; }
-        [DataType(DataType.Date)]
-        [Display(Name = "Confirmation Date")]
         public Nullable<System.DateTime> ConfirmationDate { get; set; }
-        [Required]
-        [Display(Name = "Year Of Last Promotion")]
         public Nullable<int> YearOfLastPromotion { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
-        [Required]
-        [Display(Name = "Entry Qualification")]
         public string Qualification { get; set; }
-        [Required]
-        [Display(Name = "Entry Step")]
         public Nullable<int> Step { get; set; }
-        [Display(Name = " Allowances")]
         public Nullable<double> Allowances { get; set; }
-        [Display(Name = "Current Rank")]
         public string CurrentRank { get; set; }
-        [Required]
-        [Display(Name = "Current Qualification")]
         public string CurrentQualification { get; set; }
-        [Required]
-        [Display(Name = "Current Grade")]
         public string CurrentGradeLevel { get; set; }
-        [Required]
-        [Display(Name = "Current Step")]
         public Nullable<int> CurrentStep { get; set; }
-        [Required]
-        [Display(Name = "Signatory To Appointment Letter")]
         public string SignatoryToApptLetter { get; set; }
-        [Required]
-        [Display(Name = "Current Consolidated Salary")]
         public Nullable<double> CurrentConsolidatedSalary { get; set; }
-        [Display(Name = "Current Designation")]
-        public Nullable<int> CurrentDesignation { get; set; }
+        public string CurrentDesignation { get; set; }
+        public string CurrentDepartment { get; set; }
     }
 }

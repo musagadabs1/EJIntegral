@@ -11,54 +11,31 @@ namespace EJIntegral.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Staff_Details
     {
         public int Id { get; set; }
-        [Required]
-        [Display(Name = "Staff Identification Number")]
         public string StaffId { get; set; }
-        [Required]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
-        [Required]
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Gender { get; set; }
-        [DataType(DataType.Date)]
-        [Display(Name = "Date of Birth")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Residence Address")]
         public string ResidenceAddress { get; set; }
-        [Display(Name = "Marital Status")]
         public string MaritalStatus { get; set; }
-        [Required]
-        [Display(Name = "Phone Number")]
         public string ContactPhone { get; set; }
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
         public string StateOfOrigin { get; set; }
-        [Display(Name = "Local Government Area")]
         public Nullable<int> LGA { get; set; }
-        [Display(Name = "Next of kin Full Name")]
         public string NFullName { get; set; }
-        [Display(Name = "Next of kin Address")]
         public string NAddress { get; set; }
-        [Display(Name = "Next of kin Relationship")]
         public string NRelationship { get; set; }
-        [Display(Name = "Next of kin Contact Number")]
         public string NContactNumber { get; set; }
         public Nullable<bool> Status { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
-        [Display(Name = "Development Area Council")]
         public string DevArea { get; set; }
     }
 }

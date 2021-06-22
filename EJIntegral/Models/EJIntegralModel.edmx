@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EJIntegralDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EJIntegralDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -172,6 +172,14 @@
           <Property Name="LGAName" Type="nvarchar" MaxLength="50" />
           <Property Name="Location" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Qualifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QualificationName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
         <EntityType Name="Service_Details">
           <Key>
             <PropertyRef Name="Id" />
@@ -204,7 +212,8 @@
           <Property Name="CurrentStep" Type="int" />
           <Property Name="SignatoryToApptLetter" Type="nvarchar" MaxLength="50" />
           <Property Name="CurrentConsolidatedSalary" Type="float" />
-          <Property Name="CurrentDesignation" Type="int" />
+          <Property Name="CurrentDesignation" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrentDepartment" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Staff_Details">
           <Key>
@@ -314,6 +323,7 @@
         <Function Name="GetAllPositionsByDeptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="deptId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetAllQualifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetEmployeeInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetEmployeeInfoForPrint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="staffId" Type="nvarchar" Mode="In" />
@@ -349,6 +359,7 @@
           <EntitySet Name="Emp_Postions" EntityType="Self.Emp_Postions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Emp_Salaries" EntityType="Self.Emp_Salaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocalGovernments" EntityType="Self.LocalGovernments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Qualifications" EntityType="Self.Qualifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service_Details" EntityType="Self.Service_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff_Details" EntityType="Self.Staff_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StaffImages" EntityType="Self.StaffImages" Schema="dbo" store:Type="Tables" />
@@ -369,7 +380,8 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EJIntegralDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -538,6 +550,14 @@
           <Property Name="LGAName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Qualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QualificationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
         <EntityType Name="Service_Details">
           <Key>
             <PropertyRef Name="Id" />
@@ -570,7 +590,8 @@
           <Property Name="CurrentStep" Type="Int32" />
           <Property Name="SignatoryToApptLetter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CurrentConsolidatedSalary" Type="Double" />
-          <Property Name="CurrentDesignation" Type="Int32" />
+          <Property Name="CurrentDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentDepartment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Staff_Details">
           <Key>
@@ -656,6 +677,7 @@
           <EntitySet Name="Emp_Postions" EntityType="Self.Emp_Postions" />
           <EntitySet Name="Emp_Salaries" EntityType="Self.Emp_Salaries" />
           <EntitySet Name="LocalGovernments" EntityType="Self.LocalGovernment" />
+          <EntitySet Name="Qualifications" EntityType="Self.Qualification" />
           <EntitySet Name="Service_Details" EntityType="Self.Service_Details" />
           <EntitySet Name="Staff_Details" EntityType="Self.Staff_Details" />
           <EntitySet Name="StaffImages" EntityType="Self.StaffImage" />
@@ -674,35 +696,36 @@
           <FunctionImport Name="CheckBiometricTable" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetAllBanks" ReturnType="Collection(EJIntegralDBModel.GetAllBanks_Result)" />
           <FunctionImport Name="GetAllDAS" ReturnType="Collection(EJIntegralDBModel.GetAllDAS_Result)">
-          <Parameter Name="lgaId" Mode="In" Type="Int32" />
+            <Parameter Name="lgaId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllDepartment" ReturnType="Collection(EJIntegralDBModel.GetAllDepartment_Result)" />
           <FunctionImport Name="GetAllDesignations" ReturnType="Collection(EJIntegralDBModel.GetAllDesignations_Result)">
-          <Parameter Name="deptId" Mode="In" Type="Int32" />
+            <Parameter Name="deptId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllLGAS" ReturnType="Collection(EJIntegralDBModel.GetAllLGAS_Result)" />
           <FunctionImport Name="GetAllowanceByDesignationId" ReturnType="Collection(EJIntegralDBModel.GetAllowanceByDesignationId_Result)">
-          <Parameter Name="designationId" Mode="In" Type="Int32" />
+            <Parameter Name="designationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllPositionsByDeptId">
-          <Parameter Name="deptId" Mode="In" Type="Int32" />
+            <Parameter Name="deptId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetEmployeeInfo" />
+          <FunctionImport Name="GetAllQualifications" ReturnType="Collection(EJIntegralDBModel.GetAllQualifications_Result)" />
+          <FunctionImport Name="GetEmployeeInfo" ReturnType="Collection(EJIntegralDBModel.GetEmployeeInfo_Result)" />
           <FunctionImport Name="GetEmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.GetEmployeeInfoForPrint_Result)">
-          <Parameter Name="staffId" Mode="In" Type="String" />
+            <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEmployeeInfoWithPhoto" ReturnType="Collection(EJIntegralDBModel.GetEmployeeInfoWithPhoto_Result)">
-          <Parameter Name="staffId" Mode="In" Type="String" />
+            <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetMaxId" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetSalaryByGradeAndStep" ReturnType="Collection(Double)">
             <Parameter Name="grade" Mode="In" Type="Int32" />
             <Parameter Name="step" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_EmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.sp_EmployeeInfoForPrint_Result)">
-          <Parameter Name="staffId" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetStaffId" ReturnType="Collection(String)">
+            <Parameter Name="staffId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EmployeeInfoForPrint" ReturnType="Collection(EJIntegralDBModel.sp_EmployeeInfoForPrint_Result)">
             <Parameter Name="staffId" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -730,6 +753,25 @@
           <Property Type="Double" Name="Allowance" Nullable="true" />
           <Property Type="Double" Name="Allowance1" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetAllQualifications_Result">
+          <Property Type="String" Name="Id" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="QualificationName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetEmployeeInfo_Result">
+          <Property Type="String" Name="StaffId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Fullname" Nullable="true" MaxLength="152" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="DepartmentName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EntryDesignation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EntryGradeLevel" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="EntryStep" Nullable="true" />
+          <Property Type="String" Name="CurrentGradeLevel" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CurrentStep" Nullable="true" />
+          <Property Type="String" Name="EntryQualification" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AdditionalQualification" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DateOfFirstAppt" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetEmployeeInfoForPrint_Result">
           <Property Type="String" Name="StaffId" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Fullname" Nullable="true" MaxLength="152" />
@@ -737,6 +779,7 @@
           <Property Type="String" Name="ContactNumber" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="DepartmentName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EntryDesignation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentDesignation" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EntryGradeLevel" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="EntryStep" Nullable="true" />
           <Property Type="String" Name="CurrentGradeLevel" Nullable="true" MaxLength="50" />
@@ -951,6 +994,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Qualifications">
+            <EntityTypeMapping TypeName="EJIntegralDBModel.Qualification">
+              <MappingFragment StoreEntitySet="Qualifications">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QualificationName" ColumnName="QualificationName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Service_Details">
             <EntityTypeMapping TypeName="EJIntegralDBModel.Service_Details">
               <MappingFragment StoreEntitySet="Service_Details">
@@ -983,6 +1035,7 @@
                 <ScalarProperty Name="SignatoryToApptLetter" ColumnName="SignatoryToApptLetter" />
                 <ScalarProperty Name="CurrentConsolidatedSalary" ColumnName="CurrentConsolidatedSalary" />
                 <ScalarProperty Name="CurrentDesignation" ColumnName="CurrentDesignation" />
+                <ScalarProperty Name="CurrentDepartment" ColumnName="CurrentDepartment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1082,7 +1135,33 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllPositionsByDeptId" FunctionName="EJIntegralDBModel.Store.GetAllPositionsByDeptId" />
-          <FunctionImportMapping FunctionImportName="GetEmployeeInfo" FunctionName="EJIntegralDBModel.Store.GetEmployeeInfo" />
+          <FunctionImportMapping FunctionImportName="GetAllQualifications" FunctionName="EJIntegralDBModel.Store.GetAllQualifications">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EJIntegralDBModel.GetAllQualifications_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QualificationName" ColumnName="QualificationName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployeeInfo" FunctionName="EJIntegralDBModel.Store.GetEmployeeInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EJIntegralDBModel.GetEmployeeInfo_Result">
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="EntryDesignation" ColumnName="EntryDesignation" />
+                <ScalarProperty Name="EntryGradeLevel" ColumnName="EntryGradeLevel" />
+                <ScalarProperty Name="EntryStep" ColumnName="EntryStep" />
+                <ScalarProperty Name="CurrentGradeLevel" ColumnName="CurrentGradeLevel" />
+                <ScalarProperty Name="CurrentStep" ColumnName="CurrentStep" />
+                <ScalarProperty Name="EntryQualification" ColumnName="EntryQualification" />
+                <ScalarProperty Name="AdditionalQualification" ColumnName="AdditionalQualification" />
+                <ScalarProperty Name="DateOfFirstAppt" ColumnName="DateOfFirstAppt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetEmployeeInfoForPrint" FunctionName="EJIntegralDBModel.Store.GetEmployeeInfoForPrint">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EJIntegralDBModel.GetEmployeeInfoForPrint_Result">
@@ -1092,6 +1171,7 @@
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="EntryDesignation" ColumnName="EntryDesignation" />
+                <ScalarProperty Name="CurrentDesignation" ColumnName="CurrentDesignation" />
                 <ScalarProperty Name="EntryGradeLevel" ColumnName="EntryGradeLevel" />
                 <ScalarProperty Name="EntryStep" ColumnName="EntryStep" />
                 <ScalarProperty Name="CurrentGradeLevel" ColumnName="CurrentGradeLevel" />
@@ -1125,6 +1205,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetMaxId" FunctionName="EJIntegralDBModel.Store.GetMaxId" />
           <FunctionImportMapping FunctionImportName="GetSalaryByGradeAndStep" FunctionName="EJIntegralDBModel.Store.GetSalaryByGradeAndStep" />
+          <FunctionImportMapping FunctionImportName="GetStaffId" FunctionName="EJIntegralDBModel.Store.GetStaffId" />
           <FunctionImportMapping FunctionImportName="sp_EmployeeInfoForPrint" FunctionName="EJIntegralDBModel.Store.sp_EmployeeInfoForPrint">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EJIntegralDBModel.sp_EmployeeInfoForPrint_Result">
@@ -1141,7 +1222,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetStaffId" FunctionName="EJIntegralDBModel.Store.GetStaffId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

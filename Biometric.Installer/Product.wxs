@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define FingerPrintModule_TargetDir=$(var.FingerPrintModule.TargetDir)?>
   <?define Version="2.0.0"?>
@@ -11,18 +11,18 @@
     <MediaTemplate />
 
     <WixVariable Id="WixUILicenseRtf" Value="Resources\Licence.rtf" />
-    
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="EJIntegral Biometric Installer"/>
       </Directory>
     </Directory>
 
-    
+
     <Feature Id="ProductFeature" Title="Biometric Installer" Level="1">
-       <ComponentGroupRef Id="ProductComponents" />      
+      <ComponentGroupRef Id="ProductComponents" />
     </Feature>
-    
+
     <!-- Trigger the custom action -->
     <UI>
       <UIRef Id="WixUI_Minimal" />
@@ -33,17 +33,17 @@
     </UI>
 
     <CustomAction Id="LaunchApplication"
-        BinaryKey="WixCA" 
+        BinaryKey="WixCA"
         DllEntry="WixShellExec"
         Impersonate="yes" />
-    
-    
-    <Upgrade Id="47C6DB51-D53B-4DC0-94CC-A06A073EA9AC">
+
+
+    <Upgrade Id="e3b676c4-dee6-4bce-a552-920d3ea6c18d">
       <UpgradeVersion Minimum="1.0.0" IncludeMinimum="yes" OnlyDetect="no" Maximum="$(var.Version)" IncludeMaximum="no" Property="PREVIOUSFOUND" />
     </Upgrade>
 
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
- 
+
   </Product>
 
   <Fragment>
@@ -54,7 +54,7 @@
         </File>
 
         <ServiceInstall Id="serviceInstaller" Type="ownProcess" Name="FingerPrintModule" DisplayName="Finger print middleware"
-                        Description="Finger print middleware for NigeriaMRS"
+                        Description="Finger print middleware for EJIntegral"
                         Start="auto" Account="LocalSystem" ErrorControl="ignore" Vital="yes" Interactive="no"
                         Arguments=" /start JobService">
 
@@ -71,50 +71,50 @@
                         Wait="yes" />
       </Component>
 
-      <Component Id="MySql.Data.dll" Guid="DC3511CC-E726-4B87-B390-923D11E2E011">
+      <Component Id="MySql.Data.dll" Guid="a2d05491-a150-4100-a29c-0618c79ca33c">
         <File Id="MySql.Data.dll" Name="MySql.Data.dll" Source="$(var.FingerPrintModule_TargetDir)MySql.Data.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="Newtonsoft.Json.dll" Guid="FC3AF346-0454-4062-994A-FD657373CB1D">
+      <Component Id="Newtonsoft.Json.dll" Guid="998dbb96-19ce-45d4-9ff1-0a1c7fa2231b">
         <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.FingerPrintModule_TargetDir)Newtonsoft.Json.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="SecuGen.FDxSDKPro.Windows.dll" Guid="BC275C88-9A75-4BB6-B129-36C7D27E72A4">
+      <Component Id="SecuGen.FDxSDKPro.Windows.dll" Guid="c8e5756c-07a7-4b72-a1d6-a400e1d02648">
         <File Id="SecuGen.FDxSDKPro.Windows.dll" Name="SecuGen.FDxSDKPro.Windows.dll" Source="$(var.FingerPrintModule_TargetDir)SecuGen.FDxSDKPro.Windows.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="sgfpamx.dll" Guid="BEE85B14-BD78-4988-AB88-A1EEDBB98CB4">
+      <Component Id="sgfpamx.dll" Guid="395e66fa-bef9-49b4-945f-d7f0ebc144e1">
         <File Id="sgfpamx.dll" Name="sgfpamx.dll" Source="$(var.FingerPrintModule_TargetDir)sgfpamx.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="sgfplib.dll" Guid="0D65A253-D506-46EF-BF4E-9A2F4066D823">
+      <Component Id="sgfplib.dll" Guid="707e6c22-7954-4f69-8341-22852d3543e3">
         <File Id="sgfplib.dll" Name="sgfplib.dll" Source="$(var.FingerPrintModule_TargetDir)sgfplib.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="sgfplibx.ocx" Guid="4A254BCC-D5D1-49E9-8898-E1224CDEAD03">
+      <Component Id="sgfplibx.ocx" Guid="f32605b3-dbf9-429f-8d83-dc0b20f4cdad">
         <File Id="sgfplibx.ocx" Name="sgfplibx.dll" Source="$(var.FingerPrintModule_TargetDir)sgfplibx.ocx" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
-      <Component Id="System.Net.Http.dll" Guid="1616B88F-61C5-44EF-B484-08D525ECD214">
+      <Component Id="System.Net.Http.dll" Guid="2705f42f-72a8-475e-841d-a1bf6ed0eaaa">
         <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" Source="$(var.FingerPrintModule_TargetDir)System.Net.Http.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
-      <Component Id="System.Net.Http.Formatting.dll" Guid="CCC50DCB-FFA4-4934-AA71-2E6BDC9B69DE">
+      <Component Id="System.Net.Http.Formatting.dll" Guid="e2d8892f-b281-4492-9c54-8f09705d503f">
         <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.FingerPrintModule_TargetDir)System.Net.Http.Formatting.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
-      <Component Id="System.Net.Http.WebRequest.dll" Guid="378CD03B-1131-48B0-834A-1782863D9973">
+      <Component Id="System.Net.Http.WebRequest.dll" Guid="be9aed31-aed2-45fa-bd11-a56b6905613e">
         <File Id="System.Net.Http.WebRequest.dll" Name="System.Net.Http.WebRequest.dll" Source="$(var.FingerPrintModule_TargetDir)System.Net.Http.WebRequest.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
-      <Component Id="System.Web.Http.dll" Guid="111CFC13-DABE-465B-A20E-988340B1198B">
+      <Component Id="System.Web.Http.dll" Guid="3986be42-9051-4959-9bc1-6a0a487b608a">
         <File Id="System.Web.Http.dll" Name="System.Web.Http.dll" Source="$(var.FingerPrintModule_TargetDir)System.Web.Http.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="System.Web.Http.SelfHost.dll" Guid="D2200D63-F367-4370-A000-9A033C697E6E">
+      <Component Id="System.Web.Http.SelfHost.dll" Guid="103523af-99f4-439b-adef-0461fc11ce61">
         <File Id="System.Web.Http.SelfHost.dll" Name="System.Web.Http.SelfHost.dll" Source="$(var.FingerPrintModule_TargetDir)System.Web.Http.SelfHost.dll" KeyPath="no" Vital="yes" DiskId="1" />
       </Component>
 
-      <Component Id="FingerPrintModule.exe.config" Guid="D866B05C-22F7-4A8D-8D72-A385B87CEC8F">
+      <Component Id="FingerPrintModule.exe.config" Guid="6af33e3f-0e8e-48d4-93fa-c6c07459833d">
         <File Id="FingerPrintModule.exe.config" Name="FingerPrintModule.exe.config" Source="$(var.FingerPrintModule_TargetDir)FingerPrintModule.exe.config" KeyPath="no" Vital="yes" DiskId="1" />
-      </Component> 
-      
+      </Component>
+
     </ComponentGroup>
   </Fragment>
 </Wix>

@@ -254,10 +254,16 @@
     <Compile Include="Models\GetAllowanceByDesignationId_Result.cs">
       <DependentUpon>EJIntegralModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetAllQualifications_Result.cs">
+      <DependentUpon>EJIntegralModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetEmployeeInfoForPrint_Result.cs">
       <DependentUpon>EJIntegralModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetEmployeeInfoWithPhoto_Result.cs">
+      <DependentUpon>EJIntegralModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEmployeeInfo_Result.cs">
       <DependentUpon>EJIntegralModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -266,6 +272,9 @@
       <DependentUpon>EJIntegralModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Qualification.cs">
+      <DependentUpon>EJIntegralModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReportParamer.cs" />
     <Compile Include="Models\Service_Details.cs">
       <DependentUpon>EJIntegralModel.tt</DependentUpon>
@@ -4122,6 +4131,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

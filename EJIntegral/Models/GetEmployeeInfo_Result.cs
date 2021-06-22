@@ -11,7 +11,7 @@ namespace EJIntegral.Models
 {
     using System;
     
-    public partial class GetEmployeeInfoForPrint_Result
+    public partial class GetEmployeeInfo_Result
     {
         public string StaffId { get; set; }
         public string Fullname { get; set; }
@@ -19,7 +19,6 @@ namespace EJIntegral.Models
         public string ContactNumber { get; set; }
         public string DepartmentName { get; set; }
         public string EntryDesignation { get; set; }
-        public string CurrentDesignation { get; set; }
         public string EntryGradeLevel { get; set; }
         public Nullable<int> EntryStep { get; set; }
         public string CurrentGradeLevel { get; set; }
@@ -27,6 +26,5 @@ namespace EJIntegral.Models
         public string EntryQualification { get; set; }
         public string AdditionalQualification { get; set; }
         public Nullable<System.DateTime> DateOfFirstAppt { get; set; }
-        public string ImagePath { get; set; }
     }
 }

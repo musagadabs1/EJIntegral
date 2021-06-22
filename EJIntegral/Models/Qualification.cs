@@ -12,15 +12,10 @@ namespace EJIntegral.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Designation
+    public partial class Qualification
     {
         public int Id { get; set; }
-        public Nullable<int> DeparmentId { get; set; }
-        public string DesignationName { get; set; }
+        public string QualificationName { get; set; }
         public Nullable<bool> Status { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedOn { get; set; }
     }
 }

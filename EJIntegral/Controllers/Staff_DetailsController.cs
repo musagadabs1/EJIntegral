@@ -81,10 +81,10 @@ namespace EJIntegral.Controllers
         {
             var lstDa = new List<DevelopmentArea>();
             var lgaId = Convert.ToInt32(lgId);
-            
-            
-                lstDa = (db.DevelopmentAreas.Where(x => x.lgaId == lgaId)).ToList();
-            
+
+
+            lstDa = (db.DevelopmentAreas.Where(x => x.lgaId == lgaId)).ToList();
+
             var javaScriptSerializer = new JavaScriptSerializer();
             var result = javaScriptSerializer.Serialize(lstDa);
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -95,7 +95,7 @@ namespace EJIntegral.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "StaffId,FirstName,MiddleName,LastName,Gender,DateOfBirth,ResidenceAddress,MaritalStatus,ContactPhone,EmailAddress,StateOfOrigin,LGA,NFullName,NAddress,NRelationship,NContactNumber,Status,CreatedBy,CreatedOn,ModifiedBy,ModifiedOn,DevArea")] Staff_Details staff_Details)
+        public async Task<ActionResult> Create(Staff_Details staff_Details)
         {
             if (ModelState.IsValid)
             {
@@ -141,7 +141,7 @@ namespace EJIntegral.Controllers
 
                 db.Staff_Details.Add(staff_Details);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Create","Service_Details");
+                return RedirectToAction("Create", "Service_Details");
             }
             ViewBag.LGA = new SelectList(db.GetAllLGAS(), "Id", "LGA");
             ViewBag.Gender = new List<SelectListItem>{
@@ -295,23 +295,23 @@ namespace EJIntegral.Controllers
 
                         obj.StaffId = dr["StaffId"].ToString();
                         obj.Fullname = dr["Fullname"].ToString();
-                        obj.DateOfBirth =Convert.ToDateTime( dr["DateOfBirth"].ToString());
+                        obj.DateOfBirth = Convert.ToDateTime(dr["DateOfBirth"].ToString());
                         obj.ContactNumber = dr["ContactNumber"].ToString();
                         obj.DepartmentName = dr["DepartmentName"].ToString();
                         obj.EntryDesignation = dr["EntryDesignation"].ToString();
                         obj.EntryGradeLevel = dr["EntryGradeLevel"].ToString();
-                        obj.EntryStep =Convert.ToInt32( dr["EntryStep"].ToString());
+                        obj.EntryStep = Convert.ToInt32(dr["EntryStep"].ToString());
                         obj.CurrentGradeLevel = dr["CurrentGradeLevel"].ToString();
-                        obj.CurrentStep =Convert.ToInt32( dr["CurrentStep"].ToString());
+                        obj.CurrentStep = Convert.ToInt32(dr["CurrentStep"].ToString());
                         obj.EntryQualification = dr["EntryQualification"].ToString();
                         obj.AdditionalQualification = dr["AdditionalQualification"].ToString();
-                        obj.DateOfFirstAppt =Convert.ToDateTime( dr["DateOfFirstAppt"].ToString());
+                        obj.DateOfFirstAppt = Convert.ToDateTime(dr["DateOfFirstAppt"].ToString());
 
                         details.Add(obj);
                     }
 
 
-                   
+
                 }
                 return details;
             }

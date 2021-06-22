@@ -28,9 +28,9 @@ namespace EJIntegral.Controllers
             return View();
         }
 
-        public void Dispose()
-        {
-            db.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    db.Dispose();
+        //}
     }
 }

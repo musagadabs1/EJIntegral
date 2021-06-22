@@ -42,6 +42,7 @@ namespace EJIntegral.Models
         public virtual DbSet<Emp_Postions> Emp_Postions { get; set; }
         public virtual DbSet<Emp_Salaries> Emp_Salaries { get; set; }
         public virtual DbSet<LocalGovernment> LocalGovernments { get; set; }
+        public virtual DbSet<Qualification> Qualifications { get; set; }
         public virtual DbSet<Service_Details> Service_Details { get; set; }
         public virtual DbSet<Staff_Details> Staff_Details { get; set; }
         public virtual DbSet<StaffImage> StaffImages { get; set; }
@@ -102,9 +103,14 @@ namespace EJIntegral.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllPositionsByDeptId", deptIdParameter);
         }
     
-        public virtual int GetEmployeeInfo()
+        public virtual ObjectResult<GetAllQualifications_Result> GetAllQualifications()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetEmployeeInfo");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllQualifications_Result>("GetAllQualifications");
+        }
+    
+        public virtual ObjectResult<GetEmployeeInfo_Result> GetEmployeeInfo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeeInfo_Result>("GetEmployeeInfo");
         }
     
         public virtual ObjectResult<GetEmployeeInfoForPrint_Result> GetEmployeeInfoForPrint(string staffId)
@@ -143,15 +149,6 @@ namespace EJIntegral.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetSalaryByGradeAndStep", gradeParameter, stepParameter);
         }
     
-        public virtual ObjectResult<sp_EmployeeInfoForPrint_Result> sp_EmployeeInfoForPrint(string staffId)
-        {
-            var staffIdParameter = staffId != null ?
-                new ObjectParameter("staffId", staffId) :
-                new ObjectParameter("staffId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_EmployeeInfoForPrint_Result>("sp_EmployeeInfoForPrint", staffIdParameter);
-        }
-    
         public virtual ObjectResult<string> GetStaffId(string staffId)
         {
             var staffIdParameter = staffId != null ?
@@ -159,6 +156,15 @@ namespace EJIntegral.Models
                 new ObjectParameter("staffId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetStaffId", staffIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_EmployeeInfoForPrint_Result> sp_EmployeeInfoForPrint(string staffId)
+        {
+            var staffIdParameter = staffId != null ?
+                new ObjectParameter("staffId", staffId) :
+                new ObjectParameter("staffId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_EmployeeInfoForPrint_Result>("sp_EmployeeInfoForPrint", staffIdParameter);
         }
     }
 }
