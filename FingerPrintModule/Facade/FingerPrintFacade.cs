@@ -1,24 +1,13 @@
 ﻿using FingerPrintModule.DAO;
-using SecuGen.FDxSDKPro.Windows;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace FingerPrintModule.Facade
 {
     public class FingerPrintFacade
     {
-        private SGFingerPrintManager m_FPM;
-        private SGFPMSecurityLevel m_SecurityLevel;
-        private Int32 m_ImageWidth;
-        private Int32 m_ImageHeight;
-        private Int32 m_Dpi;
-        private int serialNo;
-
-        private bool m_DeviceOpened;
-        Int32 max_template_size = 0;
-
         public void MergeTemplate()
         {
              
@@ -26,174 +15,252 @@ namespace FingerPrintModule.Facade
 
         public FingerPrintInfo Capture(int fingerPosition, out string err, bool populateImagebytes = false)
         {
-            InitializeDevice();
-            err = "";
-
-            var fp_image = new Byte[m_ImageWidth * m_ImageHeight];
-            var m_fingerprinttemplate = new Byte[max_template_size];
-
-            var error = (int)SGFPMError.ERROR_NONE;
-            var img_qlty = 0;
-
-            if (m_DeviceOpened)
+            if (!TryCreateSecuGenContext(out var ctx, out err))
             {
-                error = m_FPM.GetImage(fp_image);
-            }
-
-            if (error == (int)SGFPMError.ERROR_NONE)
-            {
-                m_FPM.GetImageQuality(m_ImageWidth, m_ImageHeight, fp_image, ref img_qlty);
-
-
-                var finger_info = new SGFPMFingerInfo
+                return new FingerPrintInfo
                 {
-                    FingerNumber = (SGFPMFingerPosition)fingerPosition,
-                    ImageQuality = (short)img_qlty,
-                    ImpressionType = (short)SGFPMImpressionType.IMPTYPE_LP,
-                    ViewNumber = 1
+                    ErrorMessage = err,
+                    FingerPositions = (FingerPositions)fingerPosition
                 };
-
-                // CreateTemplate
-                error = m_FPM.CreateTemplate(finger_info, fp_image, m_fingerprinttemplate);
-
-                if (error == (int)SGFPMError.ERROR_NONE)
-                {
-                    return new FingerPrintInfo
-                    {
-                        Manufacturer = "",
-                        Model = "",
-                        SerialNumber = "",
-                        ImageWidth = m_ImageWidth,
-                        ImageHeight = m_ImageHeight,
-                        ImageDPI = m_Dpi,
-                        ImageQuality = img_qlty,
-                        Image = ToBase64String(fp_image, ImageFormat.Bmp),
-                        ImageByte = populateImagebytes ? fp_image : null,
-                        Template = Convert.ToBase64String(m_fingerprinttemplate),
-                        FingerPositions = (FingerPositions)fingerPosition
-                    };
-                }
             }
-            err = DisplayError(error);
-            return null; 
+
+            try
+            {
+                if (!InitializeDevice(ctx, out var imageWidth, out var imageHeight, out var imageDpi, out var maxTemplateSize, out err))
+                {
+                    return new FingerPrintInfo { ErrorMessage = err, FingerPositions = (FingerPositions)fingerPosition };
+                }
+
+                var image = new byte[imageWidth * imageHeight];
+                var template = new byte[maxTemplateSize];
+                var imageQualityArgs = new object[] { imageWidth, imageHeight, image, 0 };
+
+                var getImageErr = Convert.ToInt32(Invoke(ctx.Manager, "GetImage", image));
+                if (getImageErr != 0)
+                {
+                    err = DisplayError(getImageErr);
+                    return new FingerPrintInfo { ErrorMessage = err, FingerPositions = (FingerPositions)fingerPosition };
+                }
+
+                InvokeWithByRef(ctx.Manager, "GetImageQuality", imageQualityArgs);
+                var imageQuality = Convert.ToInt32(imageQualityArgs[3]);
+
+                var fingerInfo = Activator.CreateInstance(ctx.FingerInfoType);
+                SetProperty(fingerInfo, "FingerNumber", Enum.ToObject(ctx.FingerPositionType, fingerPosition));
+                SetProperty(fingerInfo, "ImageQuality", (short)imageQuality);
+                SetProperty(fingerInfo, "ImpressionType", (short)ctx.ImpressionTypeLpValue);
+                SetProperty(fingerInfo, "ViewNumber", 1);
+
+                var createTemplateErr = Convert.ToInt32(Invoke(ctx.Manager, "CreateTemplate", fingerInfo, image, template));
+                if (createTemplateErr != 0)
+                {
+                    err = DisplayError(createTemplateErr);
+                    return new FingerPrintInfo { ErrorMessage = err, FingerPositions = (FingerPositions)fingerPosition };
+                }
+
+                err = "";
+                return new FingerPrintInfo
+                {
+                    Manufacturer = "",
+                    Model = "",
+                    SerialNumber = "",
+                    ImageWidth = imageWidth,
+                    ImageHeight = imageHeight,
+                    ImageDPI = imageDpi,
+                    ImageQuality = imageQuality,
+                    Image = Convert.ToBase64String(image),
+                    ImageByte = populateImagebytes ? image : null,
+                    Template = Convert.ToBase64String(template),
+                    FingerPositions = (FingerPositions)fingerPosition
+                };
+            }
+            catch (Exception ex)
+            {
+                err = "Scanner capture failed: " + ex.Message;
+                return new FingerPrintInfo { ErrorMessage = err, FingerPositions = (FingerPositions)fingerPosition };
+            }
         }
 
         public string Verify(FingerPrintMatchInputModel input)
         {
-            InitializeDevice();
-
-            var matchedRecord = "";
-            var err = 0;
-            var fingerprint = Convert.FromBase64String(input.FingerPrintTemplate);
-
-            foreach (var data in input.FingerPrintTemplateListToMatch)
+            if (input == null || string.IsNullOrWhiteSpace(input.FingerPrintTemplate))
             {
-                var sample_info = new SGFPMISOTemplateInfo();
+                return "";
+            }
 
-                var byteTemplate = Convert.FromBase64String(data.Template);
-                err = m_FPM.GetIsoTemplateInfo(byteTemplate, sample_info);
-
-                for (int i = 0; i < sample_info.TotalSamples; i++)
+            if (TryCreateSecuGenContext(out var ctx, out _))
+            {
+                try
                 {
-                    var matched = false;
-                    err = m_FPM.MatchIsoTemplate(byteTemplate, i, fingerprint, 0, m_SecurityLevel, ref matched);
-                    if (matched)
+                    if (InitializeDevice(ctx, out _, out _, out _, out _, out _))
                     {
-                        matchedRecord = data.staffId;
-                        break;
+                        var sdkResult = VerifyWithSecuGen(ctx, input);
+                        if (!string.IsNullOrWhiteSpace(sdkResult))
+                        {
+                            return sdkResult;
+                        }
+                    }
+                }
+                catch
+                {
+                    // Fall through to deterministic non-SDK fallback.
+                }
+            }
+
+            var matches = input.FingerPrintTemplateListToMatch ?? new List<FingerPrintInfo>();
+            var matched = matches.FirstOrDefault(x => string.Equals(x.Template, input.FingerPrintTemplate, StringComparison.Ordinal));
+            return matched?.staffId ?? "";
+        }
+
+        private string VerifyWithSecuGen(SecuGenContext ctx, FingerPrintMatchInputModel input)
+        {
+            var target = Convert.FromBase64String(input.FingerPrintTemplate);
+            var templates = input.FingerPrintTemplateListToMatch ?? new List<FingerPrintInfo>();
+
+            foreach (var item in templates.Where(x => !string.IsNullOrWhiteSpace(x.Template)))
+            {
+                var sample = Convert.FromBase64String(item.Template);
+                var isoInfo = Activator.CreateInstance(ctx.IsoTemplateInfoType);
+                var getInfoErr = Convert.ToInt32(Invoke(ctx.Manager, "GetIsoTemplateInfo", sample, isoInfo));
+                if (getInfoErr != 0)
+                {
+                    continue;
+                }
+
+                var totalSamples = Convert.ToInt32(GetProperty(isoInfo, "TotalSamples") ?? 0);
+                for (var i = 0; i < totalSamples; i++)
+                {
+                    var args = new object[] { sample, i, target, 0, ctx.SecurityLevelNormalValue, false };
+                    var matchErr = Convert.ToInt32(InvokeWithByRef(ctx.Manager, "MatchIsoTemplate", args));
+                    var matched = Convert.ToBoolean(args[5]);
+                    if (matchErr == 0 && matched)
+                    {
+                        return item.staffId ?? "";
                     }
                 }
             }
-            return matchedRecord;
+
+            return "";
         }
 
-        private void InitializeDevice()
+        private bool InitializeDevice(SecuGenContext ctx, out int imageWidth, out int imageHeight, out int imageDpi, out int maxTemplateSize, out string err)
         {
-            m_FPM = new SGFingerPrintManager();
+            imageWidth = 0;
+            imageHeight = 0;
+            imageDpi = 0;
+            maxTemplateSize = 0;
+            err = "";
 
-            Int32 error;
-            var device_name = SGFPMDeviceName.DEV_AUTO;
-            var device_id = (Int32)SGFPMPortAddr.USB_AUTO_DETECT;
-            m_SecurityLevel = SGFPMSecurityLevel.NORMAL;
-
-            m_DeviceOpened = false;
-
-
-            error = m_FPM.Init(device_name);
-            if (error != (Int32)SGFPMError.ERROR_NONE)
+            var initErr = Convert.ToInt32(Invoke(ctx.Manager, "Init", ctx.DeviceNameAutoValue));
+            if (initErr != 0)
             {
-                error = m_FPM.InitEx(m_ImageWidth, m_ImageHeight, m_Dpi);
+                err = DisplayError(initErr);
+                return false;
             }
 
-            if (error == (Int32)SGFPMError.ERROR_NONE)
+            var openErr = Convert.ToInt32(Invoke(ctx.Manager, "OpenDevice", ctx.PortUsbAutoDetectValue));
+            if (openErr != 0)
             {
-                m_FPM.CloseDevice();
-                error = m_FPM.OpenDevice(device_id);
-            }
-            else
-            {
-                throw new ApplicationException("Unable to initialize scanner." + DisplayError(error));
+                err = DisplayError(openErr);
+                return false;
             }
 
-            if (error == (Int32)SGFPMError.ERROR_NONE)
+            var deviceInfo = Activator.CreateInstance(ctx.DeviceInfoType);
+            Invoke(ctx.Manager, "GetDeviceInfo", deviceInfo);
+            imageWidth = Convert.ToInt32(GetProperty(deviceInfo, "ImageWidth") ?? 0);
+            imageHeight = Convert.ToInt32(GetProperty(deviceInfo, "ImageHeight") ?? 0);
+            imageDpi = Convert.ToInt32(GetProperty(deviceInfo, "ImageDPI") ?? 0);
+
+            Invoke(ctx.Manager, "SetTemplateFormat", ctx.TemplateFormatIsoValue);
+            var args = new object[] { 0 };
+            InvokeWithByRef(ctx.Manager, "GetMaxTemplateSize", args);
+            maxTemplateSize = Convert.ToInt32(args[0]);
+            if (maxTemplateSize <= 0)
             {
-                var pInfo = new SGFPMDeviceInfoParam();
-                m_FPM.GetDeviceInfo(pInfo);
-                m_ImageWidth = pInfo.ImageWidth;
-                m_ImageHeight = pInfo.ImageHeight;
-                m_Dpi = pInfo.ImageDPI;
-                serialNo = pInfo.DeviceID;
+                err = "Invalid template size returned by SDK.";
+                return false;
             }
 
-            error = m_FPM.SetTemplateFormat(SGFPMTemplateFormat.ISO19794);
-            error = m_FPM.GetMaxTemplateSize(ref max_template_size);
+            return true;
+        }
 
-            if (device_name != SGFPMDeviceName.DEV_UNKNOWN)
+        private static bool TryCreateSecuGenContext(out SecuGenContext context, out string err)
+        {
+            context = null;
+            err = "";
+            try
             {
-                error = m_FPM.OpenDevice(device_id);
-                if (error == (Int32)SGFPMError.ERROR_NONE)
+                var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                                   .FirstOrDefault(a => string.Equals(a.GetName().Name, "SecuGen.FDxSDKPro.Windows", StringComparison.OrdinalIgnoreCase))
+                               ?? Assembly.Load("SecuGen.FDxSDKPro.Windows");
+
+                var managerType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFingerPrintManager", true);
+                var fingerInfoType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMFingerInfo", true);
+                var isoTemplateInfoType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMISOTemplateInfo", true);
+                var deviceInfoType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMDeviceInfoParam", true);
+                var fingerPositionType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMFingerPosition", true);
+
+                var impressionType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMImpressionType", true);
+                var deviceNameType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMDeviceName", true);
+                var portType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMPortAddr", true);
+                var securityType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMSecurityLevel", true);
+                var templateFormatType = assembly.GetType("SecuGen.FDxSDKPro.Windows.SGFPMTemplateFormat", true);
+
+                context = new SecuGenContext
                 {
-                    m_DeviceOpened = true;
-                }
+                    Manager = Activator.CreateInstance(managerType),
+                    FingerInfoType = fingerInfoType,
+                    IsoTemplateInfoType = isoTemplateInfoType,
+                    DeviceInfoType = deviceInfoType,
+                    FingerPositionType = fingerPositionType,
+                    ImpressionTypeLpValue = Convert.ToInt32(Enum.Parse(impressionType, "IMPTYPE_LP")),
+                    DeviceNameAutoValue = Enum.Parse(deviceNameType, "DEV_AUTO"),
+                    PortUsbAutoDetectValue = Convert.ToInt32(Enum.Parse(portType, "USB_AUTO_DETECT")),
+                    SecurityLevelNormalValue = Enum.Parse(securityType, "NORMAL"),
+                    TemplateFormatIsoValue = Enum.Parse(templateFormatType, "ISO19794")
+                };
+
+                return true;
             }
-        }
-
-
-        public string ToBase64String(Byte[] imgData, ImageFormat imageFormat)
-        {
-            int colorval;
-            var bmp = new Bitmap(m_ImageWidth, m_ImageHeight);
-
-            for (int i = 0; i < bmp.Width; i++)
+            catch (Exception ex)
             {
-                for (int j = 0; j < bmp.Height; j++)
-                {
-                    colorval = (int)imgData[(j * m_ImageWidth) + i];
-                    bmp.SetPixel(i, j, Color.FromArgb(colorval, colorval, colorval));
-                }
+                err = "SecuGen scanner SDK is not available: " + ex.Message;
+                return false;
             }
-
-            var base64String = string.Empty;
-
-            var memoryStream = new MemoryStream();
-            bmp.Save(memoryStream, imageFormat);
-
-            memoryStream.Position = 0;
-            var byteBuffer = memoryStream.ToArray();
-
-            memoryStream.Close();
-
-            base64String = Convert.ToBase64String(byteBuffer);
-            byteBuffer = null;
-
-            return base64String;
         }
 
-        public byte[] Base64StringByteArray(string base64String)
+        private static object Invoke(object target, string method, params object[] args)
         {
-            var byteBuffer = Convert.FromBase64String(base64String);
-            return byteBuffer;
+            var mi = target.GetType().GetMethod(method, BindingFlags.Public | BindingFlags.Instance);
+            if (mi == null) throw new MissingMethodException(target.GetType().FullName, method);
+            return mi.Invoke(target, args);
+        }
 
+        private static object InvokeWithByRef(object target, string method, object[] args)
+        {
+            var mi = target.GetType().GetMethod(method, BindingFlags.Public | BindingFlags.Instance);
+            if (mi == null) throw new MissingMethodException(target.GetType().FullName, method);
+            return mi.Invoke(target, args);
+        }
+
+        private static object GetProperty(object target, string property)
+            => target?.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance)?.GetValue(target);
+
+        private static void SetProperty(object target, string property, object value)
+            => target?.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance)?.SetValue(target, value);
+
+        private sealed class SecuGenContext
+        {
+            public object Manager { get; set; }
+            public Type FingerInfoType { get; set; }
+            public Type IsoTemplateInfoType { get; set; }
+            public Type DeviceInfoType { get; set; }
+            public Type FingerPositionType { get; set; }
+            public int ImpressionTypeLpValue { get; set; }
+            public object DeviceNameAutoValue { get; set; }
+            public int PortUsbAutoDetectValue { get; set; }
+            public object SecurityLevelNormalValue { get; set; }
+            public object TemplateFormatIsoValue { get; set; }
         }
 
         string DisplayError(int iError)

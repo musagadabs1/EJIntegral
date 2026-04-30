@@ -1,0 +1,12 @@
+@model EJIntegral.Core.Models.Legacy.Document
+@{
+    ViewData["Title"] = "Delete Document";
+}
+<h2>Delete Document</h2>
+<p>Delete this document record for staff <strong>@Model.StaffId</strong>?</p>
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

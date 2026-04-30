@@ -1,0 +1,16 @@
+@model EJIntegral.Core.Models.Legacy.ServiceDetails
+@{
+    ViewData["Title"] = "Delete Service Details";
+}
+<h2>Delete Service Detail</h2>
+@if (TempData["Error"] is string err && !string.IsNullOrWhiteSpace(err))
+{
+    <div class="alert alert-danger">@err</div>
+}
+<p>Delete service record for <strong>@Model.StaffId</strong> (File No: @Model.FileNo)?</p>
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

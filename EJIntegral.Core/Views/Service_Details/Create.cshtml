@@ -1,0 +1,116 @@
+@model EJIntegral.Core.Models.Legacy.ServiceDetails
+@{
+    ViewData["Title"] = "Service Details";
+}
+
+<h2>Enter Service Details</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-2">
+                <label asp-for="FileNo" class="form-label"></label>
+                <input asp-for="FileNo" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="DateOfFirstAppt" class="form-label"></label>
+                <input asp-for="DateOfFirstAppt" type="date" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="Deparment" class="form-label"></label>
+                <select asp-for="Deparment" asp-items="ViewBag.Departments" class="form-select" id="dept"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Designation" class="form-label"></label>
+                <select asp-for="Designation" class="form-select" id="Designation"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Entry_GradeLevel" class="form-label"></label>
+                <select asp-for="Entry_GradeLevel" asp-items="ViewBag.GradeLevel" class="form-select" id="entryGradeLevel"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Step" class="form-label"></label>
+                <select asp-for="Step" asp-items="ViewBag.Step" class="form-select" id="step"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="ConsolidatedSalary" class="form-label"></label>
+                <input asp-for="ConsolidatedSalary" class="form-control" id="conSalary" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+                <label asp-for="CurrentRank" class="form-label"></label>
+                <input asp-for="CurrentRank" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="CurrentQualification" class="form-label"></label>
+                <select asp-for="CurrentQualification" asp-items="ViewBag.Qualification" class="form-select"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="CurrentGradeLevel" class="form-label"></label>
+                <select asp-for="CurrentGradeLevel" asp-items="ViewBag.GradeLevel" class="form-select" id="currentGradeLevel"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="CurrentStep" class="form-label"></label>
+                <select asp-for="CurrentStep" asp-items="ViewBag.Step" class="form-select" id="currentStep"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="CurrentConsolidatedSalary" class="form-label"></label>
+                <input asp-for="CurrentConsolidatedSalary" class="form-control" id="currentConSalary" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="BankName" class="form-label"></label>
+                <input asp-for="BankName" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Save & Continue</button>
+</form>
+
+@section Scripts {
+    <script>
+        function loadDesignations() {
+            const deptId = Number($("#dept").val() || 0);
+            if (!deptId) return;
+            $.ajax({
+                url: "@Url.Action("GetDesignationList", "Service_Details")",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ deptId })
+            }).done(function (result) {
+                const ddl = $("#Designation");
+                ddl.empty();
+                result.forEach(function (d) {
+                    ddl.append($("<option></option>").val(d.id).text(d.designationName));
+                });
+            });
+        }
+
+        function loadSalary(gradeSelector, stepSelector, outputSelector) {
+            const gradeId = Number($(gradeSelector).val() || 0);
+            const stepId = Number($(stepSelector).val() || 0);
+            if (!gradeId || !stepId) return;
+            $.ajax({
+                url: "@Url.Action("GetSalary", "Service_Details")",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ gradeId, stepId })
+            }).done(function (result) {
+                $(outputSelector).val(result);
+            });
+        }
+
+        $(function () {
+            loadDesignations();
+            $("#dept").on("change", loadDesignations);
+            $("#entryGradeLevel, #step").on("change", function () {
+                loadSalary("#entryGradeLevel", "#step", "#conSalary");
+            });
+            $("#currentGradeLevel, #currentStep").on("change", function () {
+                loadSalary("#currentGradeLevel", "#currentStep", "#currentConSalary");
+            });
+        });
+    </script>
+}

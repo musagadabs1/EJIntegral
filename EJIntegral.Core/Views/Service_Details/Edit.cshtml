@@ -1,0 +1,44 @@
+@model EJIntegral.Core.Models.Legacy.ServiceDetails
+@{
+    ViewData["Title"] = "Edit Service Details";
+}
+
+<h2>Edit Service Details</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="FileNo" class="form-label"></label>
+            <input asp-for="FileNo" class="form-control mb-2" />
+            <label asp-for="DateOfFirstAppt" class="form-label"></label>
+            <input asp-for="DateOfFirstAppt" type="date" class="form-control mb-2" />
+            <label asp-for="Deparment" class="form-label"></label>
+            <select asp-for="Deparment" asp-items="ViewBag.Departments" class="form-select mb-2"></select>
+            <label asp-for="Designation" class="form-label"></label>
+            <input asp-for="Designation" class="form-control mb-2" />
+            <label asp-for="Entry_GradeLevel" class="form-label"></label>
+            <select asp-for="Entry_GradeLevel" asp-items="ViewBag.GradeLevel" class="form-select mb-2"></select>
+            <label asp-for="Step" class="form-label"></label>
+            <select asp-for="Step" asp-items="ViewBag.Step" class="form-select mb-2"></select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="CurrentRank" class="form-label"></label>
+            <input asp-for="CurrentRank" class="form-control mb-2" />
+            <label asp-for="CurrentQualification" class="form-label"></label>
+            <select asp-for="CurrentQualification" asp-items="ViewBag.Qualification" class="form-select mb-2"></select>
+            <label asp-for="CurrentGradeLevel" class="form-label"></label>
+            <select asp-for="CurrentGradeLevel" asp-items="ViewBag.GradeLevel" class="form-select mb-2"></select>
+            <label asp-for="CurrentStep" class="form-label"></label>
+            <select asp-for="CurrentStep" asp-items="ViewBag.Step" class="form-select mb-2"></select>
+            <label asp-for="CurrentConsolidatedSalary" class="form-label"></label>
+            <input asp-for="CurrentConsolidatedSalary" class="form-control mb-2" />
+            <label asp-for="BankName" class="form-label"></label>
+            <input asp-for="BankName" class="form-control mb-2" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

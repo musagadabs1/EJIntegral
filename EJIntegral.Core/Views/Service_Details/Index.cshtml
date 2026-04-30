@@ -1,0 +1,32 @@
+@model IEnumerable<EJIntegral.Core.Models.Legacy.ServiceDetails>
+@{
+    ViewData["Title"] = "Service Details";
+}
+<h2>Service Details</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>File No</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.StaffId</td>
+            <td>@item.FileNo</td>
+            <td>@item.Deparment</td>
+            <td>@item.Designation</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

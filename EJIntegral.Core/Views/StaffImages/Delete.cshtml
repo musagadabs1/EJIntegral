@@ -1,0 +1,12 @@
+@model EJIntegral.Core.Models.Legacy.StaffImage
+@{
+    ViewData["Title"] = "Delete Staff Image";
+}
+<h2>Delete Staff Image</h2>
+<p>Delete photo record for <strong>@Model.StaffId</strong>?</p>
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

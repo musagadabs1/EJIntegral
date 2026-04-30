@@ -1,0 +1,20 @@
+@model EJIntegral.Core.Models.Legacy.StaffImage
+@{
+    ViewData["Title"] = "Edit Staff Image";
+}
+<h2>Edit Staff Image</h2>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <p><strong>Staff ID:</strong> @Model.StaffId</p>
+    @if (!string.IsNullOrWhiteSpace(Model.ImgPath))
+    {
+        <img src="@Url.Content($"~/Content/Captures/{Model.ImgPath}")" style="height:120px; width:120px; object-fit:cover;" class="mb-2" />
+    }
+    <div class="mb-2">
+        <label class="form-label">Replace Image</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

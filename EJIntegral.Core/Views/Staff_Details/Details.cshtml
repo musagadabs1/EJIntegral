@@ -1,0 +1,15 @@
+@model EJIntegral.Core.Models.Legacy.StaffDetails
+@{
+    ViewData["Title"] = "Staff Details";
+}
+
+<h2>Staff Details</h2>
+<dl class="row">
+    <dt class="col-sm-3">Staff ID</dt><dd class="col-sm-9">@Model.StaffId</dd>
+    <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@($"{Model.FirstName} {Model.MiddleName} {Model.LastName}")</dd>
+    <dt class="col-sm-3">Phone</dt><dd class="col-sm-9">@Model.ContactPhone</dd>
+    <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.EmailAddress</dd>
+    <dt class="col-sm-3">Address</dt><dd class="col-sm-9">@Model.ResidenceAddress</dd>
+</dl>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>

@@ -1,0 +1,38 @@
+@model IEnumerable<EJIntegral.Core.Models.Legacy.StaffImage>
+@{
+    ViewData["Title"] = "Staff Images";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h2>Staff Images</h2>
+    <a asp-action="Create" class="btn btn-primary">Capture Staff Photo</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>Image</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.StaffId</td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.ImgPath))
+                {
+                    <img src="@Url.Content($"~/Content/Captures/{item.ImgPath}")" alt="staff-image" style="height:64px; width:64px; object-fit:cover;" />
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

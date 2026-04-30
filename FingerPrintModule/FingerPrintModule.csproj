@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>FingerPrintModule</RootNamespace>
     <AssemblyName>FingerPrintModule</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -69,7 +69,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SecuGen.FDxSDKPro.Windows">
-      <HintPath>..\..\..\..\Desktop\SecuGen\FDx SDK Pro for Windows v4.03_J1.12\FDx SDK Pro for Windows v4.03_J1.12\FDx SDK Pro for Windows 4.03\DotNET\Bin\x64\SecuGen.FDxSDKPro.Windows.dll</HintPath>
+      <HintPath>..\..\..\..\OneDrive\Desktop\Biometric\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx_SDK_Pro_Windows_v4.3.1_J1.21\FDx SDK Pro for Windows v4.3.1\DotNETFramework\Bin\x64\SecuGen.FDxSDKPro.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>$(UserProfile)\.nuget\packages\microsoft.aspnet.webapi.core\5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost">
+      <HintPath>$(UserProfile)\.nuget\packages\microsoft.aspnet.webapi.selfhost\5.2.7\lib\net45\System.Web.Http.SelfHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -145,6 +153,9 @@
     </PackageReference>
     <PackageReference Include="MySql.Data">
       <Version>8.0.22</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

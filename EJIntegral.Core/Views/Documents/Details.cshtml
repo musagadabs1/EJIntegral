@@ -1,0 +1,19 @@
+@model EJIntegral.Core.Models.Legacy.Document
+@{
+    ViewData["Title"] = "Document Details";
+}
+<h2>Document Details</h2>
+<dl class="row">
+    <dt class="col-sm-3">Staff ID</dt><dd class="col-sm-9">@Model.StaffId</dd>
+    <dt class="col-sm-3">Description</dt><dd class="col-sm-9">@Model.Description</dd>
+    <dt class="col-sm-3">Created On</dt><dd class="col-sm-9">@Model.CreatedOn</dd>
+    <dt class="col-sm-3">File</dt>
+    <dd class="col-sm-9">
+        @if (!string.IsNullOrWhiteSpace(Model.DocPath))
+        {
+            <a href="@Url.Content($"~/Content/Docs/{Model.DocPath}")" target="_blank">Open Document</a>
+        }
+    </dd>
+</dl>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>

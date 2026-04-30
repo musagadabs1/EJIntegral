@@ -1,0 +1,66 @@
+@model EJIntegral.Core.Models.Legacy.StaffDetails
+@{
+    ViewData["Title"] = "Create Staff";
+}
+
+<h2>Employee Biodata</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-2">
+                <label asp-for="StaffId" class="form-label"></label>
+                <input asp-for="StaffId" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="MiddleName" class="form-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="Gender" class="form-label"></label>
+                <select asp-for="Gender" asp-items="ViewBag.Gender" class="form-select"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="DateOfBirth" class="form-label"></label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+                <label asp-for="ContactPhone" class="form-label"></label>
+                <input asp-for="ContactPhone" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="EmailAddress" class="form-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="LGA" class="form-label"></label>
+                <select asp-for="LGA" asp-items="ViewBag.LGA" class="form-select"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="NFullName" class="form-label"></label>
+                <input asp-for="NFullName" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label asp-for="NRelationship" class="form-label"></label>
+                <select asp-for="NRelationship" asp-items="ViewBag.Relationship" class="form-select"></select>
+            </div>
+            <div class="mb-2">
+                <label asp-for="NContactNumber" class="form-label"></label>
+                <input asp-for="NContactNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Save & Continue</button>
+</form>

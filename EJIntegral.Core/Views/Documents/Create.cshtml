@@ -1,0 +1,20 @@
+@model EJIntegral.Core.Models.Legacy.Document
+@{
+    ViewData["Title"] = "Documents";
+}
+
+<h2>Enter Employee Documents</h2>
+
+<form asp-action="Create" asp-controller="Documents" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DocPath" class="form-label">Documents</label>
+        <input type="file" name="fileBase" id="fileBase" multiple class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save & Continue</button>
+</form>

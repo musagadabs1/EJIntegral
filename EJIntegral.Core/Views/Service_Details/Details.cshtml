@@ -1,0 +1,14 @@
+@model EJIntegral.Core.Models.Legacy.ServiceDetails
+@{
+    ViewData["Title"] = "Service Detail";
+}
+<h2>Service Detail</h2>
+<dl class="row">
+    <dt class="col-sm-3">Staff ID</dt><dd class="col-sm-9">@Model.StaffId</dd>
+    <dt class="col-sm-3">File No</dt><dd class="col-sm-9">@Model.FileNo</dd>
+    <dt class="col-sm-3">Entry Rank</dt><dd class="col-sm-9">@Model.Entry_Rank</dd>
+    <dt class="col-sm-3">Current Rank</dt><dd class="col-sm-9">@Model.CurrentRank</dd>
+    <dt class="col-sm-3">Bank</dt><dd class="col-sm-9">@Model.BankName</dd>
+</dl>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>

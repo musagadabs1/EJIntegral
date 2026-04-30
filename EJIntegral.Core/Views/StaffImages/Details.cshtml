@@ -1,0 +1,14 @@
+@model EJIntegral.Core.Models.Legacy.StaffImage
+@{
+    ViewData["Title"] = "Staff Image Details";
+}
+<h2>Staff Image Details</h2>
+<p><strong>Staff ID:</strong> @Model.StaffId</p>
+@if (!string.IsNullOrWhiteSpace(Model.ImgPath))
+{
+    <img src="@Url.Content($"~/Content/Captures/{Model.ImgPath}")" style="height:180px; width:180px; object-fit:cover;" />
+}
+<div class="mt-2">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</div>

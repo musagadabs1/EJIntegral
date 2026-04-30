@@ -1,0 +1,42 @@
+@model IEnumerable<EJIntegral.Core.Models.Legacy.Document>
+@{
+    ViewData["Title"] = "Documents";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h2>Documents</h2>
+    <a asp-action="Create" class="btn btn-primary">Upload Documents</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>Description</th>
+            <th>Document</th>
+            <th>Created On</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.StaffId</td>
+            <td>@item.Description</td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.DocPath))
+                {
+                    <a href="@Url.Content($"~/Content/Docs/{item.DocPath}")" target="_blank">Open</a>
+                }
+            </td>
+            <td>@item.CreatedOn</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
